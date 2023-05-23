@@ -1,0 +1,34 @@
+{
+  "name": "yc-deals-verifier",
+  "version": "1.0.0",
+  "description": "Prove that the user is a YC Alum using reclaim protocol",
+  "main": "index.js",
+  "scripts": {
+    "build-server": "tsc && npx prisma db push",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+  },
+  "keywords": [],
+  "author": "aman",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.14.1",
+    "@reclaimprotocol/reclaim-crypto-sdk": "^0.0.2",
+    "@reclaimprotocol/reclaim-sdk": "^3.0.7",
+    "body-parser": "^1.20.2",
+    "concurrently": "^8.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "npm": "^9.5.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.16.13",
+    "prisma": "^4.14.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  }
+}
