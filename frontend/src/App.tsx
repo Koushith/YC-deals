@@ -1,12 +1,10 @@
 import React from "react";
-import { Header } from "./components";
+import { Header, Navbar } from "./components";
 
-function App() {
+export const App = () => {
   return (
     <div className="App">
-      <Header />
+      <Navbar />
     </div>
   );
-}
-
-export default App;
+};
