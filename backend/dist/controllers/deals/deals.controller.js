@@ -47,9 +47,50 @@ const submitDeal = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.submitDeal = submitDeal;
-const getAllDeals = (req, res) => { };
+const getAllDeals = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allDeals = yield prisma.submit_deal.findMany();
+        res.status(200).json({
+            message: "All Deals",
+            allDeals,
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            message: "Something went wrong. couldnt fetch all deals",
+            error: error,
+        });
+    }
+});
 exports.getAllDeals = getAllDeals;
-const getDealById = (req, res) => {
-    // protected- show only if proof is valid
-};
+const getDealById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //todo- protected- show only if proof is valid
+    const dealId = req.params.id;
+    try {
+        if (!dealId) {
+            res.status(500).json({
+                message: "ID is requred",
+            });
+            return;
+        }
+        // todo- show this only if status === 'verified'
+        const query = yield prisma.submit_deal.findFirst({
+            where: {
+                id: parseInt(dealId),
+            },
+        });
+        if (query) {
+            res.status(200).json({
+                message: "Deal",
+                deal: query,
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            message: "Something went wrong while fectching",
+            error,
+        });
+    }
+});
 exports.getDealById = getDealById;

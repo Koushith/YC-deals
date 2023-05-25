@@ -48,8 +48,52 @@ export const submitDeal = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllDeals = (req: Request, res: Response) => {};
+export const getAllDeals = async (req: Request, res: Response) => {
+  try {
+    const allDeals = await prisma.submit_deal.findMany();
+    res.status(200).json({
+      message: "All Deals",
+      allDeals,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong. couldnt fetch all deals",
+      error: error,
+    });
+  }
+};
 
-export const getDealById = (req: Request, res: Response) => {
-  // protected- show only if proof is valid
+export const getDealById = async (req: Request, res: Response) => {
+  //todo- protected- show only if proof is valid
+
+  const dealId = req.params.id;
+
+  try {
+    if (!dealId) {
+      res.status(500).json({
+        message: "ID is requred",
+      });
+      return;
+    }
+
+    // todo- show this only if status === 'verified'
+
+    const query = await prisma.submit_deal.findFirst({
+      where: {
+        id: parseInt(dealId),
+      },
+    });
+
+    if (query) {
+      res.status(200).json({
+        message: "Deal",
+        deal: query,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong while fectching",
+      error,
+    });
+  }
 };
