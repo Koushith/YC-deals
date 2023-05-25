@@ -8,3 +8,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+enum Status {
+    VERIFIED
+    PENDING
+    FAILED
+}
+
+
+model pgmigrations {
+    id      Int         @id @default(autoincrement())
+    name    String      @db.VarChar(225)
+    run_on  DateTime    @db.Timestamp(6)
+}
+
+
+model yc_deals {
+    id              Int         @id @default(autoincrement())
+    callback_id     String      @db.VarChar(1000)
+    proofs          String?
+    status          Status
+    email           String      @db.VarChar(50)
+    template_id     String      @db.VarChar(200)
+    template_url    String      @db.Text
+    created_at      DateTime    @default(now())
+    updated_at      DateTime?   @updatedAt
+}
+
+
+
+model submit_deal {
+    id              Int         @id @default(autoincrement())
+    company_name     String         @db.VarChar(100)
+    short_description String    @db.VarChar(5000)
+    email       String @db.VarChar(100)
+    deals_details String @db.VarChar(5000)
+    redeem_details String @db.VarChar(5000)
+    deal_type String @db.VarChar(20)
+    website String @db.VarChar(30)
+
+}

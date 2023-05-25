@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build-server": "tsc && npx prisma db push",
+    "migrate": "npx prisma migrate dev --name init",
+    "studio": "npx prisma studio",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "keywords": [],
-  "author": "aman",
+  "author": "koushith",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.14.1",

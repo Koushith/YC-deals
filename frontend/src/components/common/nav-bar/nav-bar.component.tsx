@@ -8,7 +8,7 @@ export const Navbar = () => {
         <h2 className="logo">YC Deals</h2>
         <ul>
           <li>
-            <NavLink to=""> How It Works?</NavLink>
+            <NavLink to="/submit-deal"> How It Works?</NavLink>
             <NavLink to="">Change Log</NavLink>
             <NavLink to="">Feature Request</NavLink>
           </li>

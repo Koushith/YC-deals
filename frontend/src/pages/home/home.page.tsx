@@ -3,7 +3,9 @@ import { Header } from "../../components";
 export const HomePage = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+
+      <h1>Home PAge</h1>
     </>
   );
 };

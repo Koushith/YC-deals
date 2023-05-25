@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
-import { ClaimDeal, ClaimStatus, SubmitDeal } from "../pages";
+import { ClaimDeal, ClaimStatus, HomePage, SubmitDeal } from "../pages";
 
 export const routerConfig = createBrowserRouter([
   {
@@ -8,10 +8,10 @@ export const routerConfig = createBrowserRouter([
     element: <App />,
 
     children: [
-      // {
-      //   path: "/",
-      //   element: <App />,
-      // },
+      {
+        path: "/",
+        element: <HomePage />,
+      },
       {
         path: "/submit-deal",
         element: <SubmitDeal />,
