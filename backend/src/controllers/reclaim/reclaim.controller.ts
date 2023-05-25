@@ -120,13 +120,16 @@ export const postStatus = async (req: Request, res: Response) => {
 
     const callbackId = req.params.id;
 
-    const proofs = reqBody.proofs as Proof[];
+    console.log("callback id", callbackId);
 
+    const proofs = reqBody.proofs as Proof[];
+    console.log("prooofs--------", proofs);
     // verify the proof
     const isValidProofs = await reclaim.verifyCorrectnessOfProofs(proofs);
-
+    console.log("isValid??", isValidProofs);
     if (!isValidProofs) {
       res.status(400).send(`Bad requests. Invalid proofs`);
+      return;
     }
 
     const record = await prisma.yc_deals.findFirst({

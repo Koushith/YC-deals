@@ -110,11 +110,15 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return;
         }
         const callbackId = req.params.id;
+        console.log("callback id", callbackId);
         const proofs = reqBody.proofs;
+        console.log("prooofs--------", proofs);
         // verify the proof
         const isValidProofs = yield reclaim.verifyCorrectnessOfProofs(proofs);
+        console.log("isValid??", isValidProofs);
         if (!isValidProofs) {
             res.status(400).send(`Bad requests. Invalid proofs`);
+            return;
         }
         const record = yield prisma.yc_deals.findFirst({
             where: {

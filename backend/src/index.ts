@@ -22,7 +22,7 @@ const app: Express = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 const { generateUuid } = reclaimprotocol.utils;
 
