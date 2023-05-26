@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const SubmitDealContainer = styled.section`
   max-width: 818px;
-  margin: 0 auto;
+  margin: 4rem auto;
 
   .heading {
     font-size: 2.4rem;
@@ -13,5 +13,15 @@ export const SubmitDealContainer = styled.section`
 `;
 
 export const FormContainer = styled.div`
-  border-radius: 4px;
+  margin-top: 2rem;
+
+  .basic,
+  .deal-info {
+    padding-bottom: 4rem;
+    border-bottom: 1px solid #d9e1ec;
+  }
+
+  .deal-info {
+    margin: 4rem 0 2rem 0;
+  }
 `;

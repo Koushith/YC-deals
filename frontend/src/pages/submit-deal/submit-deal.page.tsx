@@ -3,7 +3,7 @@ import { FormContainer, SubmitDealContainer } from "./submit-seal.styles";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Input } from "../../components/primitives";
+import { Button, Input, RichTextEditor } from "../../components/primitives";
 
 const initialState = {
   company: "",
@@ -58,28 +58,21 @@ export const SubmitDeal = () => {
     <SubmitDealContainer>
       <h2 className="heading">Submit Deal</h2>
       <FormContainer>
-        <div>
+        <div className="basic">
           <Input label="Company Name" placeholder="Enter Company Name" />
           <Input label="Email" placeholder="johndoe@domain.com" />
           <Input label="Website" placeholder="www.domain.com" />
         </div>
 
-        <div>
-          <ReactQuill
-            theme="snow"
-            value={dealDetails}
-            onChange={setDealDetails}
-          />
+        <div className="deal-info">
+          <RichTextEditor label="Deal Details" />
 
-          <ReactQuill
-            theme="snow"
-            value={redeemDetails}
-            onChange={setDealDetails}
-          />
+          <RichTextEditor label="Redeem Details" />
+
           <Input type="text" label="Deal Type" placeholder="Promotion" />
         </div>
 
-        <button>Submit Deal</button>
+        <Button label="Submit Deal" />
       </FormContainer>
       {/* <FormContainer>
         <div>
