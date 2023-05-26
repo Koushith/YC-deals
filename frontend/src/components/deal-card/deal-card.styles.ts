@@ -30,6 +30,14 @@ export const CardContainer = styled.div`
       font-size: 1.6rem;
       font-weight: 400;
       line-height: 24px;
+      word-wrap: break-word;
+      overflow: hidden;
+      max-width: 40rem;
+      text-overflow: ellipsis;
+      /* text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 40rem; */
     }
 
     .website {

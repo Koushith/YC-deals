@@ -1,6 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import { CardContainer } from "./deal-card.styles";
+import { Button } from "../primitives";
 
-export const DealCard = () => {
+export const DealCard = (props: any) => {
+  const { deal } = props;
+
+  const navigate = useNavigate();
+
+  const navigateToDealDetail = (id: number) => {
+    navigate(`/deal-detail/${id}`);
+  };
   return (
     <CardContainer>
       <div className="left">
@@ -9,16 +18,19 @@ export const DealCard = () => {
           alt="company-logo"
         />
         <div className="deal-info">
-          <h2 className="deal-title">Free Credits worth xxxx</h2>
-          <p className="deal-shortdesc">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-            quod?
-          </p>
-          <p className="website">www.koushith.com</p>
+          <h2 className="deal-title">{deal?.company_name}</h2>
+          <div>
+            <p className="deal-shortdesc">{deal?.short_description}</p>
+          </div>
+          <p className="website">{deal?.website}</p>
         </div>
       </div>
-
-      <button>View Deal</button>
+      <div>
+        <Button
+          label="View Deal"
+          onClick={() => navigateToDealDetail(deal?.id)}
+        />
+      </div>
     </CardContainer>
   );
 };

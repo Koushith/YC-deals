@@ -45,14 +45,9 @@ export const HomePage = () => {
       </TitleContainer>
 
       <div className="deals-container">
-        <DealCard />
-        <DealCard />
-        <DealCard />
-        <DealCard />
-        <DealCard />
-        <DealCard />
-        <DealCard />
-        <DealCard />
+        {deals.map((deal: any) => (
+          <DealCard key={deal.id} deal={deal} />
+        ))}
       </div>
 
       {/* <div>
