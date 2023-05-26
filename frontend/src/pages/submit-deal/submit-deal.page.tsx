@@ -45,6 +45,8 @@ export const SubmitDeal = () => {
       if (res.status === 201) {
         //do something
         setDealStatus("Deal Submitted Successfully");
+        setShortDescription("");
+        setRedeemDetails("");
         setFormData(initialState);
       }
     } catch (error) {
