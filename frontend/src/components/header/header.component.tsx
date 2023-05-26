@@ -10,12 +10,16 @@ export const Header = () => {
   const [status, setStatus] = useState("");
 
   const getStatus = async (callbackId: string) => {
-    const { data } = await axios.get(
-      `http://192.168.0.179:8000/status/${callbackId}`
-    );
+    try {
+      const { data } = await axios.get(
+        `http://192.168.0.181:8000/status/${callbackId}`
+      );
 
-    console.log(data.status);
-    setStatus(data.status);
+      console.log(data.status);
+      setStatus(data.status);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -30,7 +34,7 @@ export const Header = () => {
   const submitHandler = async () => {
     if (!email) return toast.error("Email is required");
 
-    const { data } = await axios.post("http://192.168.0.179:8000/home", {
+    const { data } = await axios.post("http://192.168.0.181:8000/home", {
       email,
     });
     setCallbackId(data.callbackId);
@@ -40,7 +44,7 @@ export const Header = () => {
   };
 
   return (
-    <div>
+    <div style={{ fontSize: 18 }}>
       <h1>YC Deals</h1>
 
       <div>
@@ -61,7 +65,7 @@ export const Header = () => {
             <h1>Success</h1>
           </>
         ) : (
-          <div>
+          <div style={{ background: "white" }}>
             {appUrl && callbackId ? <QrMessage appUrl={appUrl} /> : <></>}
           </div>
         )}

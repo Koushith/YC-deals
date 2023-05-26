@@ -1,6 +1,48 @@
+import { useState } from "react";
 import { FormContainer, SubmitDealContainer } from "./submit-seal.styles";
+import axios from "axios";
+
+const initialState = {
+  company: "",
+  shortDescription: "",
+  email: "",
+  dealDetails: "",
+  redeemDetails: "",
+  dealType: "",
+  website: "",
+};
 
 export const SubmitDeal = () => {
+  const [formData, setFormData] = useState(initialState);
+
+  const formChangeHandler = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const submitHandler = async () => {
+    console.log("haha", formData);
+    try {
+      const res = await axios.post(
+        "http://192.168.0.181:8000/deals/submit-deal",
+        {
+          companyName: formData.company,
+          shortDescription: formData.shortDescription,
+          email: formData.email,
+          dealsDetails: formData.dealDetails,
+          redeemDetails: formData.redeemDetails,
+          dealType: formData.dealType,
+          website: formData.website,
+        }
+      );
+
+      console.log("res", res);
+
+      if (res.status === 201) {
+        //do something
+      }
+    } catch (error) {
+      console.log("something went wrong", error);
+    }
+  };
   return (
     <SubmitDealContainer>
       <h2>Submit Deal</h2>
@@ -10,20 +52,39 @@ export const SubmitDeal = () => {
           <div>
             <div>
               <label htmlFor="title">Company</label>
-              <input type="text" />
+              <input
+                type="text"
+                name="company"
+                value={formData.company}
+                onChange={formChangeHandler}
+              />
             </div>
             <div>
               <label htmlFor="title">Short Description</label>
-              <input type="text" />
+              <input
+                type="text"
+                name="shortDescription"
+                value={formData.shortDescription}
+                onChange={formChangeHandler}
+              />
             </div>
             <div>
               <label htmlFor="email">Email</label>
-              <input type="email" />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={formChangeHandler}
+              />
             </div>
 
             <div>
               <label htmlFor="email">Deals Details</label>
-              <textarea />
+              <textarea
+                value={formData.dealDetails}
+                name="dealDetails"
+                onChange={formChangeHandler}
+              />
 
               <p>
                 Please explain which product(s) the deal is for and precisely
@@ -33,7 +94,11 @@ export const SubmitDeal = () => {
 
             <div>
               <label htmlFor="email">How To Redeem</label>
-              <textarea />
+              <textarea
+                value={formData.redeemDetails}
+                name="redeemDetails"
+                onChange={formChangeHandler}
+              />
               <p>
                 Clear redemption details are crucial. You can link to a list of
                 credit codes, provide a promo code or give the details for
@@ -43,15 +108,26 @@ export const SubmitDeal = () => {
 
             <div>
               <label htmlFor="dealtype">Deal Type</label>
-              <select name="deal type" id="">
+              <select
+                id=""
+                value={formData.dealType}
+                name="dealType"
+                onChange={formChangeHandler}
+              >
                 <option>yoyo</option>
               </select>
             </div>
 
             <div>
               <label htmlFor="website">Website</label>
-              <input type="website" />
+              <input
+                type="website"
+                name="website"
+                value={formData.website}
+                onChange={formChangeHandler}
+              />
             </div>
+            <button onClick={submitHandler}>Submit Deal</button>
           </div>
         </div>
       </FormContainer>

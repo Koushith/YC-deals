@@ -1,6 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
-import { ClaimDeal, ClaimStatus, HomePage, SubmitDeal } from "../pages";
+import {
+  ClaimDeal,
+  ClaimStatus,
+  DealDetailPage,
+  HomePage,
+  SubmitDeal,
+} from "../pages";
 
 export const routerConfig = createBrowserRouter([
   {
@@ -15,6 +21,10 @@ export const routerConfig = createBrowserRouter([
       {
         path: "/submit-deal",
         element: <SubmitDeal />,
+      },
+      {
+        path: "/deal-detail/:id",
+        element: <DealDetailPage />,
       },
       {
         path: "/claim-deal",
