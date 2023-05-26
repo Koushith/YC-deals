@@ -17,6 +17,7 @@ export const CardContainer = styled.div`
     gap: 2rem;
     img {
       width: 8rem;
+      height: 8rem;
     }
 
     .deal-title {

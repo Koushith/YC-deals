@@ -4,6 +4,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../../components";
+import {
+  DealDetailContainer,
+  RichTextEditorContainer,
+} from "./deal-detail.styles";
 
 export const DealDetailPage = () => {
   const [deal, setDeal] = useState([]);
@@ -27,8 +31,8 @@ export const DealDetailPage = () => {
     fetchDealDetail();
   }, [id]);
   return (
-    <>
-      <h1>{id}</h1>
+    <DealDetailContainer>
+      {/* <h1>{id}</h1>
       {isLoading && <h1>Loading.........</h1>}
       <div>
         <h1>{deal?.company_name}</h1>
@@ -42,7 +46,35 @@ export const DealDetailPage = () => {
         <h1>{deal?.deal_type}</h1>
       </div>
 
-      <Header />
-    </>
+      <Header /> */}
+
+      <div className="company-info">
+        <div className="logo">
+          <img
+            src="https://bookface-images.s3.amazonaws.com/small_logos/51751ec37409c68b5631b0d6db9257266c5787af.png"
+            alt="logo"
+          />
+        </div>
+
+        <div className="info">
+          <h2>{deal?.company_name}</h2>
+          <p className="title">{deal?.short_description}</p>
+          <div className="meta-info">
+            <p className="website">{deal?.website} |</p>
+            <p className="website">{deal?.deal_type}</p>
+          </div>
+        </div>
+      </div>
+
+      <RichTextEditorContainer
+        className="redeem-detail"
+        dangerouslySetInnerHTML={{ __html: deal?.deals_details }}
+      />
+
+      <RichTextEditorContainer
+        className="redeem-detail"
+        dangerouslySetInnerHTML={{ __html: deal?.redeem_details }}
+      />
+    </DealDetailContainer>
   );
 };
