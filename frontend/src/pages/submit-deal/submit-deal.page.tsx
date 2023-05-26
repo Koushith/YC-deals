@@ -3,6 +3,7 @@ import { FormContainer, SubmitDealContainer } from "./submit-seal.styles";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Input } from "../../components/primitives";
 
 const initialState = {
   company: "",
@@ -17,8 +18,8 @@ const initialState = {
 export const SubmitDeal = () => {
   const [formData, setFormData] = useState(initialState);
   const [dealSetaus, setDealStatus] = useState("");
-  const [value, setValue] = useState("");
-  const [shortDescription, setShortDescription] = useState("");
+
+  const [dealDetails, setDealDetails] = useState("");
   const [redeemDetails, setRedeemDetails] = useState("");
 
   const formChangeHandler = (e: any) => {
@@ -31,9 +32,9 @@ export const SubmitDeal = () => {
         "http://192.168.0.181:8000/deals/submit-deal",
         {
           companyName: formData.company,
-          shortDescription: shortDescription,
+          shortDescription: formData.shortDescription,
           email: formData.email,
-          dealsDetails: formData.dealDetails,
+          dealsDetails: dealDetails,
           redeemDetails: redeemDetails,
           dealType: formData.dealType,
           website: formData.website,
@@ -45,7 +46,7 @@ export const SubmitDeal = () => {
       if (res.status === 201) {
         //do something
         setDealStatus("Deal Submitted Successfully");
-        setShortDescription("");
+        setDealDetails("");
         setRedeemDetails("");
         setFormData(initialState);
       }
@@ -55,11 +56,33 @@ export const SubmitDeal = () => {
   };
   return (
     <SubmitDealContainer>
-      <h2>Submit Deal</h2>
-      <ReactQuill theme="snow" value={value} onChange={setValue} />
+      <h2 className="heading">Submit Deal</h2>
       <FormContainer>
         <div>
-          <h1>Basic Details</h1>
+          <Input label="Company Name" placeholder="Enter Company Name" />
+          <Input label="Email" placeholder="johndoe@domain.com" />
+          <Input label="Website" placeholder="www.domain.com" />
+        </div>
+
+        <div>
+          <ReactQuill
+            theme="snow"
+            value={dealDetails}
+            onChange={setDealDetails}
+          />
+
+          <ReactQuill
+            theme="snow"
+            value={redeemDetails}
+            onChange={setDealDetails}
+          />
+          <Input type="text" label="Deal Type" placeholder="Promotion" />
+        </div>
+
+        <button>Submit Deal</button>
+      </FormContainer>
+      {/* <FormContainer>
+        <div>
           <div>
             <div>
               <label htmlFor="title">Company</label>
@@ -68,20 +91,6 @@ export const SubmitDeal = () => {
                 name="company"
                 value={formData.company}
                 onChange={formChangeHandler}
-              />
-            </div>
-            <div>
-              <label htmlFor="title">Short Description</label>
-              {/* <input
-                type="text"
-                name="shortDescription"
-                value={formData.shortDescription}
-                onChange={formChangeHandler}
-              /> */}
-              <ReactQuill
-                theme="snow"
-                value={shortDescription}
-                onChange={setShortDescription}
               />
             </div>
             <div>
@@ -95,11 +104,30 @@ export const SubmitDeal = () => {
             </div>
 
             <div>
-              <label htmlFor="email">Deals Details</label>
-              <textarea
-                value={formData.dealDetails}
-                name="dealDetails"
+              <label htmlFor="website">Website</label>
+              <input
+                type="website"
+                name="website"
+                value={formData.website}
                 onChange={formChangeHandler}
+              />
+            </div>
+            <div>
+              <label htmlFor="title">Short Description</label>
+              <input
+                value={formData.shortDescription}
+                name="shortDescription"
+                onChange={formChangeHandler}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email">Deals Details</label>
+
+              <ReactQuill
+                theme="snow"
+                value={shortDescription}
+                onChange={setShortDescription}
               />
 
               <p>
@@ -134,21 +162,12 @@ export const SubmitDeal = () => {
               </select>
             </div>
 
-            <div>
-              <label htmlFor="website">Website</label>
-              <input
-                type="website"
-                name="website"
-                value={formData.website}
-                onChange={formChangeHandler}
-              />
-            </div>
             <button onClick={submitHandler}>Submit Deal</button>
           </div>
 
           {dealSetaus.length > 0 && <h1>{dealSetaus}</h1>}
         </div>
-      </FormContainer>
+      </FormContainer> */}
     </SubmitDealContainer>
   );
 };

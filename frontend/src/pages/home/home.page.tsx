@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Header } from "../../components";
+import { DealCard, Header } from "../../components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { HomePageContainer, TitleContainer } from "./home.styles";
 
 export const HomePage = () => {
   const [deals, setDeals] = useState([]);
@@ -34,17 +35,33 @@ export const HomePage = () => {
   };
 
   return (
-    <>
-      {/* <Header /> */}
+    <HomePageContainer>
+      <TitleContainer>
+        <h1>Welcome to YC Deals</h1>
+        <p>
+          The place to Submit and discover new Deals for any YC Alum.{" "}
+          <span onClick={navigateToNewDeal}>Submit New Deal?</span>
+        </p>
+      </TitleContainer>
 
-      <div>
+      <div className="deals-container">
+        <DealCard />
+        <DealCard />
+        <DealCard />
+        <DealCard />
+        <DealCard />
+        <DealCard />
+        <DealCard />
+        <DealCard />
+      </div>
+
+      {/* <div>
         <h1>All Deals</h1>
 
         <button onClick={navigateToNewDeal}>Add New Deal</button>
 
         <div>{isLoading && <h1>Loading.......</h1>}</div>
 
-        {/* title, short desc , deal-type*/}
 
         {deals.map((deal: any) => (
           <div key={deal?.id}>
@@ -57,7 +74,7 @@ export const HomePage = () => {
             </button>
           </div>
         ))}
-      </div>
-    </>
+      </div> */}
+    </HomePageContainer>
   );
 };
