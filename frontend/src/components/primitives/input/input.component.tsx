@@ -2,7 +2,7 @@ import { StyledInput } from "./input.styles";
 
 interface InputComponentProps {
   value?: string;
-  onChange?: () => void;
+  onChange?: any;
   label?: string;
   name?: string;
   type?: string;

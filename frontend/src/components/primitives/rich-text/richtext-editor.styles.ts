@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
-  height: 150px;
+  /* height: 150px; */
   label {
     font-size: 1.6rem;
     color: #21293c;

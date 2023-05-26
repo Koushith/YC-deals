@@ -3,7 +3,7 @@ import { StyledDiv } from "./richtext-editor.styles";
 import "react-quill/dist/quill.snow.css";
 interface RichTextEditorComponentProps {
   label?: string;
-  onChange?: () => void;
+  onChange?: any;
   value?: string;
   name?: string;
 }
