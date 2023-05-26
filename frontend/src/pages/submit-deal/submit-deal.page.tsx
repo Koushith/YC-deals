@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { FormContainer, SubmitDealContainer } from "./submit-seal.styles";
 import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const initialState = {
   company: "",
@@ -14,6 +16,10 @@ const initialState = {
 
 export const SubmitDeal = () => {
   const [formData, setFormData] = useState(initialState);
+  const [dealSetaus, setDealStatus] = useState("");
+  const [value, setValue] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
+  const [redeemDetails, setRedeemDetails] = useState("");
 
   const formChangeHandler = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,10 +31,10 @@ export const SubmitDeal = () => {
         "http://192.168.0.181:8000/deals/submit-deal",
         {
           companyName: formData.company,
-          shortDescription: formData.shortDescription,
+          shortDescription: shortDescription,
           email: formData.email,
           dealsDetails: formData.dealDetails,
-          redeemDetails: formData.redeemDetails,
+          redeemDetails: redeemDetails,
           dealType: formData.dealType,
           website: formData.website,
         }
@@ -38,6 +44,8 @@ export const SubmitDeal = () => {
 
       if (res.status === 201) {
         //do something
+        setDealStatus("Deal Submitted Successfully");
+        setFormData(initialState);
       }
     } catch (error) {
       console.log("something went wrong", error);
@@ -46,6 +54,7 @@ export const SubmitDeal = () => {
   return (
     <SubmitDealContainer>
       <h2>Submit Deal</h2>
+      <ReactQuill theme="snow" value={value} onChange={setValue} />
       <FormContainer>
         <div>
           <h1>Basic Details</h1>
@@ -61,11 +70,16 @@ export const SubmitDeal = () => {
             </div>
             <div>
               <label htmlFor="title">Short Description</label>
-              <input
+              {/* <input
                 type="text"
                 name="shortDescription"
                 value={formData.shortDescription}
                 onChange={formChangeHandler}
+              /> */}
+              <ReactQuill
+                theme="snow"
+                value={shortDescription}
+                onChange={setShortDescription}
               />
             </div>
             <div>
@@ -94,10 +108,10 @@ export const SubmitDeal = () => {
 
             <div>
               <label htmlFor="email">How To Redeem</label>
-              <textarea
-                value={formData.redeemDetails}
-                name="redeemDetails"
-                onChange={formChangeHandler}
+              <ReactQuill
+                theme="snow"
+                value={redeemDetails}
+                onChange={setRedeemDetails}
               />
               <p>
                 Clear redemption details are crucial. You can link to a list of
@@ -129,6 +143,8 @@ export const SubmitDeal = () => {
             </div>
             <button onClick={submitHandler}>Submit Deal</button>
           </div>
+
+          {dealSetaus.length > 0 && <h1>{dealSetaus}</h1>}
         </div>
       </FormContainer>
     </SubmitDealContainer>
