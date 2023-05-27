@@ -19,16 +19,16 @@ const { generateUuid } = reclaim_sdk_1.reclaimprotocol.utils;
 //Reclaim related routes
 app.post("/home", reclaim_controller_1.home);
 app.get("/status/:callbackId", reclaim_controller_1.getStatus);
-//RN related routes
-app.use(express_1.default.text({ type: "*/*" }));
-app.post("/callback/:id", reclaim_controller_1.postStatus);
 //Deals Related
 app.post("/deals/submit-deal", deals_controller_1.submitDeal);
 app.get("/deals", deals_controller_1.getAllDeals);
 app.get("/deals/:id", deals_controller_1.getDealById);
+//RN related routes
+app.use(express_1.default.text({ type: "*/*" }));
+app.post("/callback/:id", reclaim_controller_1.postStatus);
 //server starter
 app.get("/", (req, res) => {
-    res.send(`This route works!!!`);
+    res.send(`This route works---!!!`);
 });
 app.listen(PORT, () => {
     console.log(`Server is running on PORT - ${PORT}`);

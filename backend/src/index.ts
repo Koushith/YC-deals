@@ -30,18 +30,17 @@ const { generateUuid } = reclaimprotocol.utils;
 app.post("/home", home);
 app.get("/status/:callbackId", getStatus);
 
-//RN related routes
-app.use(express.text({ type: "*/*" }));
-app.post("/callback/:id", postStatus);
-
 //Deals Related
 app.post("/deals/submit-deal", submitDeal);
 app.get("/deals", getAllDeals);
 app.get("/deals/:id", getDealById);
 
+//RN related routes
+app.use(express.text({ type: "*/*" }));
+app.post("/callback/:id", postStatus);
 //server starter
 app.get("/", (req: Request, res: Response) => {
-  res.send(`This route works!!!`);
+  res.send(`This route works---!!!`);
 });
 
 app.listen(PORT, () => {

@@ -7,10 +7,19 @@ interface InputComponentProps {
   name?: string;
   type?: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 export const Input = (props: InputComponentProps) => {
-  const { value, onChange, label, name, type, placeholder } = props;
+  const {
+    value,
+    onChange,
+    label,
+    name,
+    type,
+    placeholder,
+    required = false,
+  } = props;
   return (
     <StyledInput>
       <label htmlFor={type}>{label}</label>
@@ -20,6 +29,7 @@ export const Input = (props: InputComponentProps) => {
         name={name}
         value={value}
         onChange={onChange}
+        required={required}
       />
     </StyledInput>
   );

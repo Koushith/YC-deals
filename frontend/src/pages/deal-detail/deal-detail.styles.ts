@@ -47,7 +47,7 @@ export const RichTextEditorContainer = styled.div`
   h4,
   h5,
   h6 {
-    font-size: 1.6rem;
+    font-size: 2rem;
     font-weight: 600;
     line-height: 18px;
     color: #21293c;
@@ -58,14 +58,14 @@ export const RichTextEditorContainer = styled.div`
     font-size: 1.6rem;
     font-weight: 400;
     line-height: 18px;
-    margin: 2rem 0;
+    /* margin: 2rem 0; */
   }
 
   ul {
     color: #4b587c;
     font-size: 1.6rem;
     font-weight: 400;
-    line-height: 18px;
+
     margin: 2rem 0;
     li {
       margin-left: 2rem;

@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Header } from "../../components";
+
 import {
   DealDetailContainer,
   RichTextEditorContainer,
@@ -32,22 +32,6 @@ export const DealDetailPage = () => {
   }, [id]);
   return (
     <DealDetailContainer>
-      {/* <h1>{id}</h1>
-      {isLoading && <h1>Loading.........</h1>}
-      <div>
-        <h1>{deal?.company_name}</h1>
-        <h1>{deal?.title}</h1>
-        <h1>{deal?.email}</h1>
-        <h1>{deal?.short_description}</h1>
-        <h1>{deal?.details}</h1>
-        <h1>{deal?.details}</h1>
-        <h1>{deal?.redeem_details}</h1>
-        <h1>{deal?.website}</h1>
-        <h1>{deal?.deal_type}</h1>
-      </div>
-
-      <Header /> */}
-
       <div className="company-info">
         <div className="logo">
           <img

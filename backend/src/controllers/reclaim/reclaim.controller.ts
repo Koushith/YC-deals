@@ -127,10 +127,19 @@ export const postStatus = async (req: Request, res: Response) => {
     // verify the proof
     const isValidProofs = await reclaim.verifyCorrectnessOfProofs(proofs);
     console.log("isValid??", isValidProofs);
+
     if (!isValidProofs) {
       res.status(400).send(`Bad requests. Invalid proofs`);
       return;
     }
+
+    // check for existing proofs
+
+    // const existingProofs = await prisma.yc_deals.findMany({
+    //   select:{
+
+    //   }
+    // })
 
     const record = await prisma.yc_deals.findFirst({
       where: {
@@ -172,3 +181,22 @@ export const postStatus = async (req: Request, res: Response) => {
     res.status(500).send(`Some error occured ${error}`);
   }
 };
+
+const proofs = [
+  {
+    onChainClaimId: "3131",
+    templateClaimId: "0",
+    provider: "yc-login",
+    parameters: { userId: "599180" },
+    chainId: 420,
+    ownerPublicKey:
+      "02ab4cf725727844176b11df4402e5cad6c074b6bf67c920710053d20a95e44301",
+    timestampS: "1685177974",
+
+    witnessAddresses: ["reclaim-node.questbook.app"],
+    signatures: [
+      "0x85da2c2eb6a1a27c4a47b404843a8f4f5fc73c0497819df423a82562ecb8742c2aaf0e2b5e76b717a210361d78a9c5930332a7ce5c47dd531ed2001d8bdb4ae01b",
+    ],
+    redactedParameters: '{"userId":"******"}',
+  },
+];
