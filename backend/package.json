@@ -4,7 +4,7 @@
   "description": "Prove that the user is a YC Alum using reclaim protocol",
   "main": "index.js",
   "scripts": {
-    "build-server": "tsc && npx prisma db push",
+    "build-server": "npx tsc && npx prisma db push",
     "migrate": "npx prisma migrate dev --name init",
     "studio": "npx prisma studio",
     "build": "tsc",
