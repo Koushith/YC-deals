@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
+
 import { useNavigate } from "react-router-dom";
 import { CardContainer } from "./deal-card.styles";
-import { Button } from "../primitives";
+import { Button, Shimmer } from "../primitives";
+import { DealShimmer, Test } from "./deal-card.shimmer";
 
 export const DealCard = (props: any) => {
-  const { deal } = props;
+  const { deal, isLoading = false } = props;
 
   const navigate = useNavigate();
 

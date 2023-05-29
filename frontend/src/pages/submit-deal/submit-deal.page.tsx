@@ -3,7 +3,12 @@ import { FormContainer, SubmitDealContainer } from "./submit-seal.styles";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Button, Input, RichTextEditor } from "../../components/primitives";
+import {
+  Button,
+  GoBack,
+  Input,
+  RichTextEditor,
+} from "../../components/primitives";
 import { toast } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -64,6 +69,7 @@ export const SubmitDeal = () => {
   };
   return (
     <SubmitDealContainer>
+      <GoBack />
       <h2 className="heading">Submit Deal</h2>
       {/* <button onClick={notify}>Toast</button> */}
       <FormContainer>

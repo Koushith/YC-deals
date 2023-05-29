@@ -8,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postStatus = exports.getStatus = exports.home = void 0;
 const validators_1 = require("../../utils/validators");
 const client_1 = require("@prisma/client");
 const reclaim_sdk_1 = require("@reclaimprotocol/reclaim-sdk");
+const fs_1 = __importDefault(require("fs"));
 const CALLBACK_URL = process.env.CALLBACK_URL + "/" + "callback/";
 const CALLBACK_ID_PREFIX = "bookface-";
 const prisma = new client_1.PrismaClient();
@@ -113,6 +117,14 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log("callback id", callbackId);
         const proofs = reqBody.proofs;
         console.log("prooofs--------", proofs);
+        // Writing proofs array to a local file
+        fs_1.default.writeFile("proofs.txt", JSON.stringify(proofs), (err) => {
+            if (err) {
+                res.status(500).send(`Failed to write proofs to file: ${err}`);
+                return;
+            }
+            console.log("Proofs written to file");
+        });
         // verify the proof
         const isValidProofs = yield reclaim.verifyCorrectnessOfProofs(proofs);
         console.log("isValid??", isValidProofs);
@@ -164,19 +176,3 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.postStatus = postStatus;
-const proofs = [
-    {
-        onChainClaimId: "3131",
-        templateClaimId: "0",
-        provider: "yc-login",
-        parameters: { userId: "599180" },
-        chainId: 420,
-        ownerPublicKey: "02ab4cf725727844176b11df4402e5cad6c074b6bf67c920710053d20a95e44301",
-        timestampS: "1685177974",
-        witnessAddresses: ["reclaim-node.questbook.app"],
-        signatures: [
-            "0x85da2c2eb6a1a27c4a47b404843a8f4f5fc73c0497819df423a82562ecb8742c2aaf0e2b5e76b717a210361d78a9c5930332a7ce5c47dd531ed2001d8bdb4ae01b",
-        ],
-        redactedParameters: '{"userId":"******"}',
-    },
-];

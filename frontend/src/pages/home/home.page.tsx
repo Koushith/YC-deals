@@ -3,11 +3,13 @@ import { DealCard, Header } from "../../components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { HomePageContainer, TitleContainer } from "./home.styles";
+import { Shimmer } from "react-shimmer";
+import { DealShimmer } from "../../components/deal-card/deal-card.shimmer";
 
 export const HomePage = () => {
   const [deals, setDeals] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
+  console.log("deals", deals.length);
   const navigate = useNavigate();
 
   const fetchAllDeals = async () => {
@@ -36,6 +38,7 @@ export const HomePage = () => {
 
   return (
     <HomePageContainer>
+      {/* <GoBack /> */}
       <TitleContainer>
         <h1>Welcome to YC Deals</h1>
         <p>
@@ -45,31 +48,11 @@ export const HomePage = () => {
       </TitleContainer>
 
       <div className="deals-container">
+        {isLoading && <DealShimmer />}
         {deals.map((deal: any) => (
           <DealCard key={deal.id} deal={deal} />
         ))}
       </div>
-
-      {/* <div>
-        <h1>All Deals</h1>
-
-        <button onClick={navigateToNewDeal}>Add New Deal</button>
-
-        <div>{isLoading && <h1>Loading.......</h1>}</div>
-
-
-        {deals.map((deal: any) => (
-          <div key={deal?.id}>
-            <h1>{deal?.company_name}</h1>
-            <h1>{deal?.short_description}</h1>
-            <h1>{deal?.deal_type}</h1>
-
-            <button onClick={() => navigateToDealDetail(deal?.id)}>
-              Claim Deal
-            </button>
-          </div>
-        ))}
-      </div> */}
     </HomePageContainer>
   );
 };

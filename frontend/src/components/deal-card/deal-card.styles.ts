@@ -58,4 +58,10 @@ export const CardContainer = styled.div`
     cursor: pointer;
     font-weight: 400;
   }
+
+  /* shimmer */
+  .btn {
+    height: 30px;
+    width: 70px;
+  }
 `;

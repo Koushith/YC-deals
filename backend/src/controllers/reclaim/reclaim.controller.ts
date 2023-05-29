@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import { validateEmail } from "../../utils/validators";
 import { PrismaClient } from "@prisma/client";
 import { Proof, reclaimprotocol } from "@reclaimprotocol/reclaim-sdk";
+import fs from "fs";
 
 const CALLBACK_URL = process.env.CALLBACK_URL! + "/" + "callback/";
 const CALLBACK_ID_PREFIX = "bookface-";
@@ -124,6 +125,16 @@ export const postStatus = async (req: Request, res: Response) => {
 
     const proofs = reqBody.proofs as Proof[];
     console.log("prooofs--------", proofs);
+
+    // Writing proofs array to a local file
+    fs.writeFile("proofs.txt", JSON.stringify(proofs), (err) => {
+      if (err) {
+        res.status(500).send(`Failed to write proofs to file: ${err}`);
+        return;
+      }
+      console.log("Proofs written to file");
+    });
+
     // verify the proof
     const isValidProofs = await reclaim.verifyCorrectnessOfProofs(proofs);
     console.log("isValid??", isValidProofs);
@@ -181,22 +192,3 @@ export const postStatus = async (req: Request, res: Response) => {
     res.status(500).send(`Some error occured ${error}`);
   }
 };
-
-const proofs = [
-  {
-    onChainClaimId: "3131",
-    templateClaimId: "0",
-    provider: "yc-login",
-    parameters: { userId: "599180" },
-    chainId: 420,
-    ownerPublicKey:
-      "02ab4cf725727844176b11df4402e5cad6c074b6bf67c920710053d20a95e44301",
-    timestampS: "1685177974",
-
-    witnessAddresses: ["reclaim-node.questbook.app"],
-    signatures: [
-      "0x85da2c2eb6a1a27c4a47b404843a8f4f5fc73c0497819df423a82562ecb8742c2aaf0e2b5e76b717a210361d78a9c5930332a7ce5c47dd531ed2001d8bdb4ae01b",
-    ],
-    redactedParameters: '{"userId":"******"}',
-  },
-];

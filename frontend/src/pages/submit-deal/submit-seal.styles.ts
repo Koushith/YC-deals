@@ -9,6 +9,7 @@ export const SubmitDealContainer = styled.section`
     font-weight: 600;
     line-height: 3.2rem;
     color: #21293c;
+    margin-top: 1rem;
   }
 `;
 

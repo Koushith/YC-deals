@@ -7,6 +7,7 @@ export const DealDetailContainer = styled.section`
   .company-info {
     display: flex;
     gap: 2rem;
+    margin-top: 2rem;
     margin-bottom: 4rem;
     img {
       height: 8rem;

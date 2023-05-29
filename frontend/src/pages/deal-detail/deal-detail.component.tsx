@@ -8,6 +8,8 @@ import {
   DealDetailContainer,
   RichTextEditorContainer,
 } from "./deal-detail.styles";
+import { GoBack } from "../../components/primitives";
+import { DealDeailsShimmer } from "./deal-detail.shimmer";
 
 export const DealDetailPage = () => {
   const [deal, setDeal] = useState([]);
@@ -32,6 +34,8 @@ export const DealDetailPage = () => {
   }, [id]);
   return (
     <DealDetailContainer>
+      <GoBack />
+      {isLoading && <DealDeailsShimmer />}
       <div className="company-info">
         <div className="logo">
           <img
