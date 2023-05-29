@@ -72,27 +72,117 @@ export const CardContainer = styled.div`
 
 export const DealShimmer = () => {
   return (
-    <CardContainer>
-      <div className="left">
-        <Shimmer height="200" width="200" className="logo" />
-        <div className="deal-info">
-          <h2 className="deal-title">
-            <Shimmer className="deal-title-shimmer" />
-          </h2>
-          <div>
-            <p className="deal-shortdesc">
-              <Shimmer className="short-desc-shimmer" />
+    <>
+      <CardContainer>
+        <div className="left">
+          <Shimmer height="200" width="200" className="logo" />
+          <div className="deal-info">
+            <h2 className="deal-title">
+              <Shimmer className="deal-title-shimmer" />
+            </h2>
+            <div>
+              <p className="deal-shortdesc">
+                <Shimmer className="short-desc-shimmer" />
+              </p>
+            </div>
+            <p className="website">
+              <Shimmer className="website-shimmer" />
             </p>
           </div>
-          <p className="website">
-            <Shimmer className="website-shimmer" />
-          </p>
         </div>
-      </div>
-      <div>
-        {" "}
-        <Shimmer className="btn" />
-      </div>
-    </CardContainer>
+        <div>
+          {" "}
+          <Shimmer className="btn" />
+        </div>
+      </CardContainer>
+      <CardContainer>
+        <div className="left">
+          <Shimmer height="200" width="200" className="logo" />
+          <div className="deal-info">
+            <h2 className="deal-title">
+              <Shimmer className="deal-title-shimmer" />
+            </h2>
+            <div>
+              <p className="deal-shortdesc">
+                <Shimmer className="short-desc-shimmer" />
+              </p>
+            </div>
+            <p className="website">
+              <Shimmer className="website-shimmer" />
+            </p>
+          </div>
+        </div>
+        <div>
+          {" "}
+          <Shimmer className="btn" />
+        </div>
+      </CardContainer>
+      <CardContainer>
+        <div className="left">
+          <Shimmer height="200" width="200" className="logo" />
+          <div className="deal-info">
+            <h2 className="deal-title">
+              <Shimmer className="deal-title-shimmer" />
+            </h2>
+            <div>
+              <p className="deal-shortdesc">
+                <Shimmer className="short-desc-shimmer" />
+              </p>
+            </div>
+            <p className="website">
+              <Shimmer className="website-shimmer" />
+            </p>
+          </div>
+        </div>
+        <div>
+          {" "}
+          <Shimmer className="btn" />
+        </div>
+      </CardContainer>
+      <CardContainer>
+        <div className="left">
+          <Shimmer height="200" width="200" className="logo" />
+          <div className="deal-info">
+            <h2 className="deal-title">
+              <Shimmer className="deal-title-shimmer" />
+            </h2>
+            <div>
+              <p className="deal-shortdesc">
+                <Shimmer className="short-desc-shimmer" />
+              </p>
+            </div>
+            <p className="website">
+              <Shimmer className="website-shimmer" />
+            </p>
+          </div>
+        </div>
+        <div>
+          {" "}
+          <Shimmer className="btn" />
+        </div>
+      </CardContainer>
+      <CardContainer>
+        <div className="left">
+          <Shimmer height="200" width="200" className="logo" />
+          <div className="deal-info">
+            <h2 className="deal-title">
+              <Shimmer className="deal-title-shimmer" />
+            </h2>
+            <div>
+              <p className="deal-shortdesc">
+                <Shimmer className="short-desc-shimmer" />
+              </p>
+            </div>
+            <p className="website">
+              <Shimmer className="website-shimmer" />
+            </p>
+          </div>
+        </div>
+        <div>
+          {" "}
+          <Shimmer className="btn" />
+        </div>
+      </CardContainer>
+    </>
   );
 };

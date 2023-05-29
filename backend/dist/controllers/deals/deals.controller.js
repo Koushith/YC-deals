@@ -66,6 +66,7 @@ exports.getAllDeals = getAllDeals;
 const getDealById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //todo- protected- show only if proof is valid
     const dealId = req.params.id;
+    console.log("Deal id", dealId);
     try {
         if (!dealId) {
             res.status(500).json({

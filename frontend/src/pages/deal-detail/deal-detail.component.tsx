@@ -2,7 +2,7 @@
 //@ts-nocheck
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import {
   DealDetailContainer,
@@ -14,13 +14,19 @@ import { DealDeailsShimmer } from "./deal-detail.shimmer";
 export const DealDetailPage = () => {
   const [deal, setDeal] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { id } = useParams();
+
+  const location = useLocation();
+  // const dealID = location?.state?.dealId;
+
+  console.log("loc from details", location?.state?.dealID);
 
   const fetchDealDetail = async () => {
     setIsLoading(true);
 
     try {
-      const { data } = await axios.get(`http://192.168.0.181:8000/deals/${id}`);
+      const { data } = await axios.get(
+        `http://192.168.0.181:8000/deals/${location?.state?.dealID}`
+      );
       console.log(data);
       setDeal(data?.deal);
       setIsLoading(false);
@@ -31,7 +37,7 @@ export const DealDetailPage = () => {
 
   useEffect(() => {
     fetchDealDetail();
-  }, [id]);
+  }, [location?.state?.dealID]);
   return (
     <DealDetailContainer>
       <GoBack />
@@ -39,7 +45,7 @@ export const DealDetailPage = () => {
       <div className="company-info">
         <div className="logo">
           <img
-            src="https://bookface-images.s3.amazonaws.com/small_logos/51751ec37409c68b5631b0d6db9257266c5787af.png"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA"
             alt="logo"
           />
         </div>

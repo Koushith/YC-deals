@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormContainer, SubmitDealContainer } from "./submit-seal.styles";
+import { FormContainer, SubmitDealContainer } from "./submit-deal.styles";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -140,7 +140,11 @@ export const SubmitDeal = () => {
           />
         </div>
 
-        <Button label="Submit Deal" onClick={submitHandler} />
+        <Button
+          label="Submit Deal"
+          onClick={submitHandler}
+          className="submit-btn"
+        />
       </FormContainer>
       <ToastContainer
       // position="top-right"

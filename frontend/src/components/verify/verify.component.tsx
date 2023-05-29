@@ -4,6 +4,7 @@ import { VerifyContainer } from "./verify.styles";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const QRCode = ({ appUrl }: any) => {
   return (
@@ -36,6 +37,15 @@ export const Verify = () => {
   const [appUrl, setAppUrl] = useState("");
   const [status, setStatus] = useState("");
 
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  console.log("location", location);
+  const dealID = location?.state?.dealId;
+
+  console.log("deal id", dealID);
+
   const getStatus = async (callbackId: string) => {
     try {
       const { data } = await axios.get(
@@ -44,6 +54,14 @@ export const Verify = () => {
 
       console.log(data.status);
       setStatus(data.status);
+
+      if (data.status === "VERIFIED") {
+        navigate(`/deal-detail`, {
+          state: {
+            dealID: dealID,
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +110,7 @@ export const Verify = () => {
 
       {status === "VERIFIED" && (
         <>
-          <h1>Success</h1>
+          <h1>Success.. redirecting to Deal Details Page</h1>
         </>
       )}
     </VerifyContainer>

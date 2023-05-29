@@ -4,12 +4,13 @@ interface ButtonComponentProps {
   label?: string;
   onClick?: () => void;
   style?: any;
+  className?: string;
 }
 
 export const Button = (props: ButtonComponentProps) => {
-  const { label, onClick, style } = props;
+  const { label, onClick, style, className } = props;
   return (
-    <StyledButton onClick={onClick} style={style}>
+    <StyledButton onClick={onClick} style={style} className={className}>
       {label}
     </StyledButton>
   );

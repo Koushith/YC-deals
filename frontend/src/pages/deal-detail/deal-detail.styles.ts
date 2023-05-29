@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { tablets, phones } from "../../utils";
 
 export const DealDetailContainer = styled.section`
   max-width: 80rem;
@@ -38,6 +39,16 @@ export const DealDetailContainer = styled.section`
         color: #4b587c;
       }
     }
+  }
+  @media (${tablets}) {
+  }
+
+  /**************************/
+  /* BELOW 544px (Phones) */
+  /**************************/
+
+  @media (${phones}) {
+    padding: 2rem;
   }
 `;
 

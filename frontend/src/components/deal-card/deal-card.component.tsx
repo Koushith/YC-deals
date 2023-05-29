@@ -7,18 +7,23 @@ import { Button, Shimmer } from "../primitives";
 import { DealShimmer, Test } from "./deal-card.shimmer";
 
 export const DealCard = (props: any) => {
-  const { deal, isLoading = false } = props;
+  const { deal } = props;
 
   const navigate = useNavigate();
 
   const navigateToDealDetail = (id: number) => {
-    navigate(`/deal-detail/${id}`);
+    // navigate(`/deal-detail/${id}`);
+    navigate("claim-deal", {
+      state: {
+        dealId: id,
+      },
+    });
   };
   return (
     <CardContainer>
       <div className="left">
         <img
-          src="https://ph-files.imgix.net/28555106-99db-4ebf-9cfd-13a65db9d2d6.png?auto=compress&codec=mozjpeg&cs=strip&auto=format&w=80&h=80&fit=crop&bg=0fff&dpr=1"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA"
           alt="company-logo"
         />
         <div className="deal-info">
@@ -29,12 +34,12 @@ export const DealCard = (props: any) => {
           <p className="website">{deal?.website}</p>
         </div>
       </div>
-      <div>
-        <Button
-          label="View Deal"
-          onClick={() => navigateToDealDetail(deal?.id)}
-        />
-      </div>
+
+      <Button
+        label="View Deal"
+        onClick={() => navigateToDealDetail(deal?.id)}
+        className="btn"
+      />
     </CardContainer>
   );
 };

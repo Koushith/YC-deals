@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { phones, tablets } from "../../utils";
 
 export const CardContainer = styled.div`
   display: flex;
@@ -59,9 +60,25 @@ export const CardContainer = styled.div`
     font-weight: 400;
   }
 
-  /* shimmer */
-  .btn {
-    height: 30px;
-    width: 70px;
+  /**************************/
+  /* BELOW 944px (Tablets) -> 59*16=944 */
+  /**************************/
+
+  @media (${tablets}) {
+  }
+
+  /**************************/
+  /* BELOW 544px (Phones) */
+  /**************************/
+
+  @media (${phones}) {
+    flex-direction: column;
+    .left {
+      width: 100%;
+    }
+    .btn {
+      width: 100%;
+      margin-top: 1rem;
+    }
   }
 `;

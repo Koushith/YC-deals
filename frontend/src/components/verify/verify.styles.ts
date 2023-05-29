@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { tablets, phones } from "../../utils";
 
 export const VerifyContainer = styled.div`
   border: 1px solid #d9e1ec;

@@ -23,7 +23,7 @@ export const routerConfig = createBrowserRouter([
         element: <SubmitDeal />,
       },
       {
-        path: "/deal-detail/:id",
+        path: "/deal-detail",
         element: <DealDetailPage />,
       },
       {

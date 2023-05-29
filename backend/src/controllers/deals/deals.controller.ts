@@ -67,6 +67,7 @@ export const getDealById = async (req: Request, res: Response) => {
   //todo- protected- show only if proof is valid
 
   const dealId = req.params.id;
+  console.log("Deal id", dealId);
 
   try {
     if (!dealId) {

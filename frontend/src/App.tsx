@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 export const App = () => {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Outlet />
       <ToastContainer
         position="top-right"
