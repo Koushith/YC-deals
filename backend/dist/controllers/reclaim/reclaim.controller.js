@@ -70,7 +70,6 @@ const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.home = home;
 const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("route was here");
     const callbackId = req.params.callbackId;
     if (!callbackId) {
         res.status(400).send("400 -Bad Request. callback id id required");
@@ -118,7 +117,7 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const proofs = reqBody.proofs;
         console.log("prooofs--------", proofs);
         // Writing proofs array to a local file
-        fs_1.default.writeFile("proofs.txt", JSON.stringify(proofs), (err) => {
+        fs_1.default.writeFile("proofs.json", JSON.stringify(proofs), (err) => {
             if (err) {
                 res.status(500).send(`Failed to write proofs to file: ${err}`);
                 return;

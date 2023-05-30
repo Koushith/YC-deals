@@ -70,7 +70,6 @@ export const home = async (req: Request, res: Response) => {
 };
 
 export const getStatus = async (req: Request, res: Response) => {
-  console.log("route was here");
   const callbackId = req.params.callbackId;
   if (!callbackId) {
     res.status(400).send("400 -Bad Request. callback id id required");
@@ -127,7 +126,7 @@ export const postStatus = async (req: Request, res: Response) => {
     console.log("prooofs--------", proofs);
 
     // Writing proofs array to a local file
-    fs.writeFile("proofs.txt", JSON.stringify(proofs), (err) => {
+    fs.writeFile("proofs.json", JSON.stringify(proofs), (err) => {
       if (err) {
         res.status(500).send(`Failed to write proofs to file: ${err}`);
         return;

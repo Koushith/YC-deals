@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
+import { phones, tablets } from "../../../utils";
 
 export const NavbarContainer = styled.div`
   background-color: #fffefe;
   box-shadow: 0 0 1px 1px rgba(33, 41, 63, 0.1);
-  /* border: 1px solid #d9e1ec; */
   nav {
     height: 8rem;
     max-width: 1122px;
@@ -11,6 +11,10 @@ export const NavbarContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .mobile-nav {
+      display: none;
+    }
 
     .logo {
       font-weight: 700;
@@ -30,6 +34,29 @@ export const NavbarContainer = styled.div`
         &:hover {
           color: #ff6154;
         }
+      }
+    }
+  }
+
+  @media (${tablets}) {
+    // Styles for tablets (if needed)
+  }
+
+  /**************************/
+  /* BELOW 544px (Phones) */
+  /**************************/
+
+  @media (${phones}) {
+    padding: 0 2rem;
+    nav {
+      ul {
+        display: none;
+      }
+      .mobile-nav {
+        display: block;
+
+        height: 20px;
+        width: 20px;
       }
     }
   }

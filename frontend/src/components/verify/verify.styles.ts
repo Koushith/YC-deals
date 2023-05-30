@@ -15,6 +15,18 @@ export const VerifyContainer = styled.div`
     flex-direction: column;
 
     gap: 2rem;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      img {
+        height: 8rem;
+        width: 8rem;
+      }
+    }
     .title {
       font-size: 2rem;
       text-align: center;

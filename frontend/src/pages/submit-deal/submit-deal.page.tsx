@@ -9,9 +9,8 @@ import {
   Input,
   RichTextEditor,
 } from "../../components/primitives";
-import { toast } from "react-hot-toast";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   company: "",
@@ -30,12 +29,15 @@ export const SubmitDeal = () => {
   const [dealDetails, setDealDetails] = useState("");
   const [redeemDetails, setRedeemDetails] = useState("");
 
+  const navigate = useNavigate();
+
   const formChangeHandler = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const submitHandler = async () => {
-    console.log("haha", formData);
     try {
+      setIsLoading(true);
       const res = await axios.post(
         "http://192.168.0.181:8000/deals/submit-deal",
         {
@@ -53,25 +55,35 @@ export const SubmitDeal = () => {
 
       if (res.status === 201) {
         //do something
+        toast.success("Deal Submitted Successfully!!");
         setDealStatus("Deal Submitted Successfully");
         setDealDetails("");
         setRedeemDetails("");
         setFormData(initialState);
-        toast("Deals Submitted Successfully !");
+        setIsLoading(false);
+        navigate("/");
       }
+
+      toast.dismiss();
     } catch (error) {
       console.log("something went wrong", error);
+      toast.error("Something went wrong while creating a deal");
     }
   };
 
-  const notify = () => {
-    toast("Wow so easy !");
-  };
   return (
     <SubmitDealContainer>
       <GoBack />
       <h2 className="heading">Submit Deal</h2>
-      {/* <button onClick={notify}>Toast</button> */}
+
+      <Toaster
+        containerClassName="toast"
+        toastOptions={{
+          style: {
+            fontSize: "16px",
+          },
+        }}
+      />
       <FormContainer>
         <div className="basic">
           <Input
@@ -141,23 +153,11 @@ export const SubmitDeal = () => {
         </div>
 
         <Button
-          label="Submit Deal"
+          label={isLoading ? "Submitting" : "Submit"}
           onClick={submitHandler}
           className="submit-btn"
         />
       </FormContainer>
-      <ToastContainer
-      // position="top-right"
-      // autoClose={5000}
-      // hideProgressBar={false}
-      // newestOnTop={false}
-      // closeOnClick
-      // rtl={false}
-      // pauseOnFocusLoss
-      // draggable
-      // pauseOnHover
-      // theme="dark"
-      />
 
       {dealSetaus.length > 0 && <h1>Deals Submitted successfully</h1>}
     </SubmitDealContainer>

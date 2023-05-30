@@ -1,4 +1,4 @@
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Button, Input } from "../primitives";
 import { VerifyContainer } from "./verify.styles";
 import axios from "axios";
@@ -55,6 +55,15 @@ export const Verify = () => {
       console.log(data.status);
       setStatus(data.status);
 
+      // setTimeout(() => {
+      //   setStatus("VERIFIED");
+      //   navigate(`/deal-detail`, {
+      //     state: {
+      //       dealID: dealID,
+      //     },
+      //   });
+      // }, 3000);
+
       if (data.status === "VERIFIED") {
         navigate(`/deal-detail`, {
           state: {
@@ -93,6 +102,9 @@ export const Verify = () => {
         <QRCode appUrl={appUrl} />
       ) : (
         <div className="form-container">
+          <div className="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA" />
+          </div>
           <h1 className="title">The Content is Locked. Verify to View</h1>
           <Input
             placeholder="Enter your Email"
