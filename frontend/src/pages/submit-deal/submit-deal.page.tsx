@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FormContainer, SubmitDealContainer } from "./submit-deal.styles";
 import axios from "axios";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
   Button,
@@ -38,6 +37,7 @@ export const SubmitDeal = () => {
   const submitHandler = async () => {
     try {
       setIsLoading(true);
+      const toastId = toast.success("Submitting Deal!!");
       const res = await axios.post(
         "http://192.168.0.181:8000/deals/submit-deal",
         {
@@ -64,7 +64,7 @@ export const SubmitDeal = () => {
         navigate("/");
       }
 
-      toast.dismiss();
+      toast.dismiss(toastId);
     } catch (error) {
       console.log("something went wrong", error);
       toast.error("Something went wrong while creating a deal");
