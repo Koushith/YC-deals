@@ -18,9 +18,7 @@ export const HomePage = () => {
     try {
       setIsLoading(true);
 
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_BACKEND_BASE_URL}/deals`
-      );
+      const { data } = await axios.get(`https://yc-deals.netlify.app/deals`);
       setDeals(data?.allDeals);
       setIsLoading(false);
     } catch (error) {

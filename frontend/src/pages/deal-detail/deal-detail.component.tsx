@@ -16,12 +16,11 @@ export const DealDetailPage = () => {
 
   const location = useLocation();
 
-
   const fetchDealDetail = async () => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_BACKEND_BASE_URL}/deals/${location?.state?.dealID}`
+        `https://yc-deals.netlify.app/deals/${location?.state?.dealID}`
       );
       console.log(data);
       setDeal(data?.deal);
@@ -35,7 +34,6 @@ export const DealDetailPage = () => {
     fetchDealDetail();
   }, [location?.state?.dealID]);
 
-  
   return (
     <DealDetailContainer>
       <GoBack />

@@ -82,7 +82,7 @@ export const Verify = () => {
   const getStatus = async (callbackId: string) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_BACKEND_BASE_URL}/status/${callbackId}`
+        `https://yc-deals.netlify.app/status/${callbackId}`
       );
 
       console.log(data.status);
@@ -119,12 +119,9 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_BACKEND_BASE_URL}/home`,
-      {
-        email,
-      }
-    );
+    const { data } = await axios.post(`https://yc-deals.netlify.app/home`, {
+      email,
+    });
     setCallbackId(data.callbackId);
     setAppUrl(data.url);
   };
