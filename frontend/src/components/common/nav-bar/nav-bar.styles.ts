@@ -4,6 +4,9 @@ import { phones, tablets } from "../../../utils";
 export const NavbarContainer = styled.div`
   background-color: #fffefe;
   box-shadow: 0 0 1px 1px rgba(33, 41, 63, 0.1);
+  /* position:fixed;
+  top:0;
+  width:100%; */
   nav {
     height: 8rem;
     max-width: 1122px;

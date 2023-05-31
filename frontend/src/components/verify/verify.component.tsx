@@ -1,6 +1,6 @@
 import toast, { Toaster } from "react-hot-toast";
 import { Button, GoBack, Input } from "../primitives";
-import { VerifyContainer } from "./verify.styles";
+import { VerifyContainer, StyledDiv } from "./verify.styles";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
@@ -111,7 +111,7 @@ export const Verify = () => {
 
   useEffect(() => {
     if (!callbackId) return;
-   
+
     const intervalId = setInterval(() => {
       getStatus(callbackId);
     }, 3000);
@@ -119,44 +119,41 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
-
-    const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/home`, {
-      email,
-    });
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/home`,
+      {
+        email,
+      }
+    );
     setCallbackId(data.callbackId);
     setAppUrl(data.url);
-
   };
   return (
-    <>
-    <GoBack style={{maxWidth: "50rem", margin:"1rem auto"}}/>
-    <VerifyContainer>
-        
-      {appUrl && callbackId ? (
-        <QRCode appUrl={appUrl} />
-      ) : (
-       
-        <div className="form-container">
-        
-          <div className="logo">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA" />
+    <StyledDiv className="verify">
+      <GoBack style={{ maxWidth: "50rem", margin: "1rem auto" }} />
+      <VerifyContainer>
+        {appUrl && callbackId ? (
+          <QRCode appUrl={appUrl} />
+        ) : (
+          <div className="form-container">
+            <div className="logo">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA" />
+            </div>
+            <h1 className="title">The Content is Locked. Verify to View</h1>
+            <Input
+              placeholder="Enter your Email"
+              value={email}
+              required
+              onChange={(e: any) => setEmail(e.target.value)}
+            />
+            <Button
+              label="Verify with BookFace Access"
+              style={{ width: "100%" }}
+              onClick={submitHandler}
+            />
           </div>
-          <h1 className="title">The Content is Locked. Verify to View</h1>
-          <Input
-            placeholder="Enter your Email"
-            value={email}
-            required
-            onChange={(e: any) => setEmail(e.target.value)}
-          />
-          <Button
-            label="Verify with BookFace Access"
-            style={{ width: "100%" }}
-            onClick={submitHandler}
-          />
-        </div>
-     
-      )}
-    </VerifyContainer>
-  </>
+        )}
+      </VerifyContainer>
+    </StyledDiv>
   );
 };

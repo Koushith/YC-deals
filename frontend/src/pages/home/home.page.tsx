@@ -1,9 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 import { useEffect, useState } from "react";
+ß
 import { DealCard, Header } from "../../components";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { HomePageContainer, TitleContainer } from "./home.styles";
 import { DealShimmer } from "../../components/deal-card/deal-card.shimmer";
+import DealIcon from "../../assets/icons/deal.svg";
 
 export const HomePage = () => {
   const [deals, setDeals] = useState([]);
@@ -15,7 +18,9 @@ export const HomePage = () => {
     try {
       setIsLoading(true);
 
-      const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/deals`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/deals`
+      );
       setDeals(data?.allDeals);
       setIsLoading(false);
     } catch (error) {
@@ -27,15 +32,12 @@ export const HomePage = () => {
     fetchAllDeals();
   }, []);
 
- 
-
   const navigateToNewDeal = () => {
     navigate("submit-deal");
   };
 
   return (
     <HomePageContainer>
-    
       <TitleContainer>
         <h1>Welcome to YC Deals</h1>
         <p>
@@ -50,6 +52,13 @@ export const HomePage = () => {
           <DealCard key={deal.id} deal={deal} />
         ))}
       </div>
+
+      {deals.length < 0 && (
+        <div className="no-deals-found">
+          <img src={DealIcon} />
+          <h1>No Deals Found. </h1>
+        </div>
+      )}
     </HomePageContainer>
   );
 };

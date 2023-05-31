@@ -1,12 +1,25 @@
 import { styled } from "styled-components";
 import { tablets, phones } from "../../utils";
 
+export const StyledDiv= styled.div`
+margin-top:8rem;
+    margin-bottom:38rem;
+
+    @media (${phones}) {
+      margin-top:4rem;
+   margin-bottom:6rem;
+  }
+
+`
+
 export const VerifyContainer = styled.div`
   border: 1px solid #d9e1ec;
   padding: 2.2rem;
   border-radius: 4px;
   max-width: 50rem;
   margin: 0 auto;
+
+  
 
   .form-container {
     display: flex;
