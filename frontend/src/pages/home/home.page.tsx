@@ -18,7 +18,7 @@ export const HomePage = () => {
     try {
       setIsLoading(true);
 
-      const { data } = await axios.get(`https://yc-deals.netlify.app/deals`);
+      const { data } = await axios.get(`https://ycdeals.onrender.com/deals`);
       setDeals(data?.allDeals);
       setIsLoading(false);
     } catch (error) {

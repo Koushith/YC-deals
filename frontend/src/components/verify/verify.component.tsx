@@ -82,7 +82,7 @@ export const Verify = () => {
   const getStatus = async (callbackId: string) => {
     try {
       const { data } = await axios.get(
-        `https://yc-deals.netlify.app/status/${callbackId}`
+        `https://ycdeals.onrender.com/status/${callbackId}`
       );
 
       console.log(data.status);
@@ -119,7 +119,7 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
-    const { data } = await axios.post(`https://yc-deals.netlify.app/home`, {
+    const { data } = await axios.post(`https://ycdeals.onrender.com/home`, {
       email,
     });
     setCallbackId(data.callbackId);
