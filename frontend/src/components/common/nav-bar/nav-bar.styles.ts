@@ -19,6 +19,12 @@ export const NavbarContainer = styled.div`
     .logo {
       font-weight: 700;
       font-size: 1.6rem;
+      text-decoration: none;
+      color:#21293c;
+      transition: all 0.3s ease;
+        &:hover {
+          color: #ff6154;
+        }
     }
 
     ul {

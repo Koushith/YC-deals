@@ -11,12 +11,13 @@ export const Navbar = () => {
   return (
     <NavbarContainer>
       <nav>
-        <h2 className="logo">YC Deals</h2>
+        <NavLink className="logo" to="/">
+          YC Deals
+        </NavLink>
         <ul>
           <li>
-            <NavLink to="/submit-deal"> How It Works?</NavLink>
-            <NavLink to="">Change Log</NavLink>
-            <NavLink to="">Feature Request</NavLink>
+            <NavLink to="/how-it-works"> How It Works?</NavLink>
+            <NavLink to="/about">About</NavLink>
           </li>
         </ul>
         {/* mobile-nav */}

@@ -3,7 +3,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-
 import {
   DealDetailContainer,
   RichTextEditorContainer,
@@ -16,15 +15,10 @@ export const DealDetailPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
-  // const dealID = location?.state?.dealId;
 
-  console.log("loc from details", location?.state?.dealID);
 
   const fetchDealDetail = async () => {
     setIsLoading(true);
-
-    
-
     try {
       const { data } = await axios.get(
         `${process.env.REACT_APP_BACKEND_BASE_URL}/deals/${location?.state?.dealID}`
@@ -40,6 +34,8 @@ export const DealDetailPage = () => {
   useEffect(() => {
     fetchDealDetail();
   }, [location?.state?.dealID]);
+
+  
   return (
     <DealDetailContainer>
       <GoBack />

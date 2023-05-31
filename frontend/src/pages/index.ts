@@ -6,3 +6,6 @@ export * from "./claim-status/claim-status.page";
 
 export * from "./submit-deal/submit-deal.page";
 export * from "./deal-detail/deal-detail.component";
+
+export * from './how-it-works/how-it-works.page'
+export * from './about/about.page'

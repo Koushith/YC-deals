@@ -24,13 +24,13 @@ export const StyledDiv = styled.div`
   }
 `;
 
-export const GoBack = () => {
+export const GoBack = ({style}:any) => {
   const navigate = useNavigate();
   const backHandler = () => {
     navigate(-1);
   };
   return (
-    <StyledDiv onClick={backHandler}>
+    <StyledDiv onClick={backHandler} style={style}>
       <svg
         aria-hidden="true"
         focusable="false"

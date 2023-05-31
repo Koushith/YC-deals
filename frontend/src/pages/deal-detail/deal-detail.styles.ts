@@ -3,7 +3,8 @@ import { tablets, phones } from "../../utils";
 
 export const DealDetailContainer = styled.section`
   max-width: 80rem;
-  margin: 4rem auto;
+  margin: 2rem auto 8rem auto;
+  padding-bottom:8rem;
 
   .company-info {
     display: flex;
@@ -49,6 +50,12 @@ export const DealDetailContainer = styled.section`
 
   @media (${phones}) {
     padding: 2rem;
+    margin: 0rem auto;
+    padding-bottom:8rem;
+
+    .company-info{
+      flex-direction:column;
+    }
   }
 `;
 

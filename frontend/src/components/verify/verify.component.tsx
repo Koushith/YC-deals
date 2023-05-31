@@ -1,5 +1,5 @@
 import toast, { Toaster } from "react-hot-toast";
-import { Button, Input } from "../primitives";
+import { Button, GoBack, Input } from "../primitives";
 import { VerifyContainer } from "./verify.styles";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -75,13 +75,9 @@ export const Verify = () => {
   const [status, setStatus] = useState("");
 
   const navigate = useNavigate();
-
   const location = useLocation();
 
-  console.log("location", location);
   const dealID = location?.state?.dealId;
-
-  console.log("deal id", dealID);
 
   const getStatus = async (callbackId: string) => {
     try {
@@ -115,7 +111,7 @@ export const Verify = () => {
 
   useEffect(() => {
     if (!callbackId) return;
-    console.log("effects ran");
+   
     const intervalId = setInterval(() => {
       getStatus(callbackId);
     }, 3000);
@@ -123,7 +119,6 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
-    if (!email) return toast.error("Email is required");
 
     const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/home`, {
       email,
@@ -131,14 +126,18 @@ export const Verify = () => {
     setCallbackId(data.callbackId);
     setAppUrl(data.url);
 
-    console.log("resssss----", data);
   };
   return (
+    <>
+    <GoBack style={{maxWidth: "50rem", margin:"1rem auto"}}/>
     <VerifyContainer>
+        
       {appUrl && callbackId ? (
         <QRCode appUrl={appUrl} />
       ) : (
+       
         <div className="form-container">
+        
           <div className="logo">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA" />
           </div>
@@ -155,7 +154,9 @@ export const Verify = () => {
             onClick={submitHandler}
           />
         </div>
+     
       )}
     </VerifyContainer>
+  </>
   );
 };
