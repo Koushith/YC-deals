@@ -1,4 +1,5 @@
 "use strict";
+//@ts-nocheck
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,7 +37,6 @@ const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     try {
         const callbackId = CALLBACK_ID_PREFIX + generateUuid();
-        console.log("callback id", callbackId);
         const template = reclaim
             .connect("Prove that you have bookface login", [
             {
@@ -48,8 +48,6 @@ const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             .generateTemplate(callbackId);
         const templateUrl = template.url;
         const templateId = template.id;
-        console.log("template url-----", templateUrl);
-        console.log("template id", templateId);
         const query = yield prisma.yc_deals.create({
             data: {
                 callback_id: callbackId,
@@ -95,6 +93,7 @@ const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getStatus = getStatus;
 const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     if (!req.params.id) {
         res.status(400).send(`400 - Bad Request: callbackId is required`);
         return;
@@ -105,7 +104,6 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         let reqBody;
-        console.log("raw request body", req.body);
         reqBody = JSON.parse(decodeURIComponent(req.body));
         console.log("parsed req body", reqBody);
         if (!reqBody.proofs || !reqBody.proofs.length) {
@@ -113,11 +111,16 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return;
         }
         const callbackId = req.params.id;
-        console.log("callback id", callbackId);
+        console.log("callback id-------", callbackId);
         const proofs = reqBody.proofs;
         console.log("prooofs--------", proofs);
+        let first = proofs[0];
+        const stringToNumberConversion = Number((_a = first === null || first === void 0 ? void 0 : first.parameters) === null || _a === void 0 ? void 0 : _a.userId);
+        const finalProof = [...proofs, { parameters: { "userId": stringToNumberConversion } }];
+        console.log("str conversion", stringToNumberConversion);
+        console.log("final prood", finalProof);
         // Writing proofs array to a local file
-        fs_1.default.writeFile("proofs.json", JSON.stringify(proofs), (err) => {
+        fs_1.default.writeFile("proofs.json", finalProof, (err) => {
             if (err) {
                 res.status(500).send(`Failed to write proofs to file: ${err}`);
                 return;
@@ -125,17 +128,12 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             console.log("Proofs written to file");
         });
         // verify the proof
-        const isValidProofs = yield reclaim.verifyCorrectnessOfProofs(proofs);
+        const isValidProofs = yield reclaim.verifyCorrectnessOfProofs(finalProof);
         console.log("isValid??", isValidProofs);
         if (!isValidProofs) {
             res.status(400).send(`Bad requests. Invalid proofs`);
             return;
         }
-        // check for existing proofs
-        // const existingProofs = await prisma.yc_deals.findMany({
-        //   select:{
-        //   }
-        // })
         const record = yield prisma.yc_deals.findFirst({
             where: {
                 callback_id: callbackId,
