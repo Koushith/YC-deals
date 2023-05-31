@@ -86,7 +86,7 @@ export const Verify = () => {
   const getStatus = async (callbackId: string) => {
     try {
       const { data } = await axios.get(
-        `http://192.168.0.181:8000/status/${callbackId}`
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/status/${callbackId}`
       );
 
       console.log(data.status);
@@ -125,7 +125,7 @@ export const Verify = () => {
   const submitHandler = async () => {
     if (!email) return toast.error("Email is required");
 
-    const { data } = await axios.post("http://192.168.0.181:8000/home", {
+    const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/home`, {
       email,
     });
     setCallbackId(data.callbackId);

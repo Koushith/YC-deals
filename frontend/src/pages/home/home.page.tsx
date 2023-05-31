@@ -3,7 +3,6 @@ import { DealCard, Header } from "../../components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { HomePageContainer, TitleContainer } from "./home.styles";
-import { Shimmer } from "react-shimmer";
 import { DealShimmer } from "../../components/deal-card/deal-card.shimmer";
 
 export const HomePage = () => {
@@ -16,7 +15,7 @@ export const HomePage = () => {
     try {
       setIsLoading(true);
 
-      const { data } = await axios.get("http://192.168.0.181:8000/deals");
+      const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/deals`);
       setDeals(data?.allDeals);
       setIsLoading(false);
     } catch (error) {
@@ -28,9 +27,7 @@ export const HomePage = () => {
     fetchAllDeals();
   }, []);
 
-  const navigateToDealDetail = (id: number) => {
-    navigate(`/deal-detail/${id}`);
-  };
+ 
 
   const navigateToNewDeal = () => {
     navigate("submit-deal");
@@ -38,7 +35,7 @@ export const HomePage = () => {
 
   return (
     <HomePageContainer>
-      {/* <GoBack /> */}
+    
       <TitleContainer>
         <h1>Welcome to YC Deals</h1>
         <p>

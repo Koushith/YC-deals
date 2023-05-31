@@ -23,9 +23,11 @@ export const DealDetailPage = () => {
   const fetchDealDetail = async () => {
     setIsLoading(true);
 
+    
+
     try {
       const { data } = await axios.get(
-        `http://192.168.0.181:8000/deals/${location?.state?.dealID}`
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/deals/${location?.state?.dealID}`
       );
       console.log(data);
       setDeal(data?.deal);

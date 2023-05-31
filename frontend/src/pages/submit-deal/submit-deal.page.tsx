@@ -23,7 +23,6 @@ const initialState = {
 
 export const SubmitDeal = () => {
   const [formData, setFormData] = useState(initialState);
-  const [dealSetaus, setDealStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [dealDetails, setDealDetails] = useState("");
   const [redeemDetails, setRedeemDetails] = useState("");
@@ -39,7 +38,7 @@ export const SubmitDeal = () => {
       setIsLoading(true);
       const toastId = toast.success("Submitting Deal!!");
       const res = await axios.post(
-        "http://192.168.0.181:8000/deals/submit-deal",
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/deals/submit-deal`,
         {
           companyName: formData.company,
           shortDescription: formData.shortDescription,
@@ -51,12 +50,10 @@ export const SubmitDeal = () => {
         }
       );
 
-      console.log("res", res);
+     
 
       if (res.status === 201) {
-        //do something
         toast.success("Deal Submitted Successfully!!");
-        setDealStatus("Deal Submitted Successfully");
         setDealDetails("");
         setRedeemDetails("");
         setFormData(initialState);
@@ -158,8 +155,6 @@ export const SubmitDeal = () => {
           className="submit-btn"
         />
       </FormContainer>
-
-      {dealSetaus.length > 0 && <h1>Deals Submitted successfully</h1>}
     </SubmitDealContainer>
   );
 };

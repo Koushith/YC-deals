@@ -10,7 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const reclaim_controller_1 = require("./controllers/reclaim/reclaim.controller");
 const deals_controller_1 = require("./controllers/deals/deals.controller");
 dotenv_1.default.config();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
