@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import express, { Express, Request, Response } from "express";
 import { validateEmail } from "../../utils/validators";
 import { PrismaClient } from "@prisma/client";
@@ -28,7 +30,6 @@ export const home = async (req: Request, res: Response) => {
 
   try {
     const callbackId = CALLBACK_ID_PREFIX + generateUuid();
-    console.log("callback id", callbackId);
 
     const template = reclaim
       .connect(
@@ -46,9 +47,6 @@ export const home = async (req: Request, res: Response) => {
 
     const templateUrl = template.url;
     const templateId = template.id;
-
-    console.log("template url-----", templateUrl);
-    console.log("template id", templateId);
 
     const query = await prisma.yc_deals.create({
       data: {
@@ -108,7 +106,7 @@ export const postStatus = async (req: Request, res: Response) => {
   try {
     let reqBody: any;
 
-    console.log("raw request body", req.body);
+  
 
     reqBody = JSON.parse(decodeURIComponent(req.body));
     console.log("parsed req body", reqBody);
@@ -120,13 +118,21 @@ export const postStatus = async (req: Request, res: Response) => {
 
     const callbackId = req.params.id;
 
-    console.log("callback id", callbackId);
+    console.log("callback id-------", callbackId);
 
     const proofs = reqBody.proofs as Proof[];
     console.log("prooofs--------", proofs);
 
+    let first= proofs[0]
+ 
+    const stringToNumberConversion = Number(first?.parameters?.userId)
+    const finalProof = [...proofs, { parameters: { "userId": stringToNumberConversion } }];
+   console.log("str conversion", stringToNumberConversion)
+    console.log("final prood", finalProof)
+    
+
     // Writing proofs array to a local file
-    fs.writeFile("proofs.json", JSON.stringify(proofs), (err) => {
+    fs.writeFile("proofs.json", finalProof, (err) => {
       if (err) {
         res.status(500).send(`Failed to write proofs to file: ${err}`);
         return;
@@ -135,7 +141,7 @@ export const postStatus = async (req: Request, res: Response) => {
     });
 
     // verify the proof
-    const isValidProofs = await reclaim.verifyCorrectnessOfProofs(proofs);
+    const isValidProofs = await reclaim.verifyCorrectnessOfProofs(finalProof);
     console.log("isValid??", isValidProofs);
 
     if (!isValidProofs) {
@@ -143,13 +149,6 @@ export const postStatus = async (req: Request, res: Response) => {
       return;
     }
 
-    // check for existing proofs
-
-    // const existingProofs = await prisma.yc_deals.findMany({
-    //   select:{
-
-    //   }
-    // })
 
     const record = await prisma.yc_deals.findFirst({
       where: {
@@ -166,7 +165,7 @@ export const postStatus = async (req: Request, res: Response) => {
         where: {
           id: record.id,
         },
-        data: {
+        data: {  
           status: "VERIFIED",
           proofs: JSON.stringify(proofs),
         },

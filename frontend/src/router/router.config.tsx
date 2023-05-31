@@ -35,14 +35,15 @@ export const routerConfig = createBrowserRouter([
       {
         path: "/claim-status",
         element: <ClaimStatus />,
-      },{
-        path:"/how-it-works",
-        element:<HowItWorks/>
-      }
-      ,{
-        path:"/about",
-        element:<AboutPage/>
-      }
+      },
+      {
+        path: "/how-it-works",
+        element: <HowItWorks />,
+      },
+      {
+        path: "/about",
+        element: <AboutPage />,
+      },
     ],
   },
 ]);

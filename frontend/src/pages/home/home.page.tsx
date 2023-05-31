@@ -1,12 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 import { useEffect, useState } from "react";
-ß
 import { DealCard, Header } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { HomePageContainer, TitleContainer } from "./home.styles";
 import { DealShimmer } from "../../components/deal-card/deal-card.shimmer";
 import DealIcon from "../../assets/icons/deal.svg";
+import axios from "axios";
 
 export const HomePage = () => {
   const [deals, setDeals] = useState([]);

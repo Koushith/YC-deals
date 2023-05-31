@@ -88,22 +88,22 @@ export const Verify = () => {
       console.log(data.status);
       setStatus(data.status);
 
-      setTimeout(() => {
-        setStatus("VERIFIED");
-        navigate(`/deal-detail`, {
-          state: {
-            dealID: dealID,
-          },
-        });
-      }, 3000);
-
-      // if (data.status === "VERIFIED") {
+      // setTimeout(() => {
+      //   setStatus("VERIFIED");
       //   navigate(`/deal-detail`, {
       //     state: {
       //       dealID: dealID,
       //     },
       //   });
-      // }
+      // }, 3000);
+
+      if (data.status === "VERIFIED") {
+        navigate(`/deal-detail`, {
+          state: {
+            dealID: dealID,
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
     }

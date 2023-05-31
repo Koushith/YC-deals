@@ -2,7 +2,6 @@ import express, { Express, Request, Response } from "express";
 import { reclaimprotocol } from "@reclaimprotocol/reclaim-sdk";
 import dotenv from "dotenv";
 import cors from "cors";
-import bodyParser from "body-parser";
 import {
   getStatus,
   home,
@@ -17,14 +16,11 @@ import {
 dotenv.config();
 
 const PORT = process.env.PORT ;
-
 const app: Express = express();
 
 app.use(express.json());
 app.use(cors());
-// app.use(bodyParser.urlencoded({ extended: true }));
 
-const { generateUuid } = reclaimprotocol.utils;
 
 //Reclaim related routes
 app.post("/home", home);
