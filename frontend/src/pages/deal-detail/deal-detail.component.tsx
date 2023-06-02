@@ -37,34 +37,39 @@ export const DealDetailPage = () => {
   return (
     <DealDetailContainer>
       <GoBack />
-      {isLoading && <DealDeailsShimmer />}
-      <div className="company-info">
-        <div className="logo">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA"
-            alt="logo"
-          />
-        </div>
+      {isLoading ? (
+        <DealDeailsShimmer />
+      ) : (
+        <>
+          <div className="company-info">
+            <div className="logo">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA"
+                alt="logo"
+              />
+            </div>
 
-        <div className="info">
-          <h2>{deal?.company_name}</h2>
-          <p className="title">{deal?.short_description}</p>
-          <div className="meta-info">
-            <p className="website">{deal?.website} |</p>
-            <p className="website">{deal?.deal_type}</p>
+            <div className="info">
+              <h2>{deal?.company_name}</h2>
+              <p className="title">{deal?.short_description}</p>
+              <div className="meta-info">
+                <p className="website">{deal?.website} |</p>
+                <p className="website">{deal?.deal_type}</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <RichTextEditorContainer
-        className="redeem-detail"
-        dangerouslySetInnerHTML={{ __html: deal?.deals_details }}
-      />
+          <RichTextEditorContainer
+            className="redeem-detail"
+            dangerouslySetInnerHTML={{ __html: deal?.deals_details }}
+          />
 
-      <RichTextEditorContainer
-        className="redeem-detail"
-        dangerouslySetInnerHTML={{ __html: deal?.redeem_details }}
-      />
+          <RichTextEditorContainer
+            className="redeem-detail"
+            dangerouslySetInnerHTML={{ __html: deal?.redeem_details }}
+          />
+        </>
+      )}
     </DealDetailContainer>
   );
 };

@@ -83,6 +83,30 @@ export const VerifyContainer = styled.div`
         color: #ff6154;
       }
     }
+
+    .failed-container{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+
+     h1{
+      text-align:center;
+      font-size:1.8rem;
+      margin-bottom:2rem;
+     }
+
+     p{
+      text-align:center;
+      font-size:1.4rem;
+     
+     }
+
+     img{
+      height:8rem;
+      width:8rem;
+       margin-bottom:2rem;
+     }
+    }
   }
 `;
 

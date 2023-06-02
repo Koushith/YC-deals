@@ -1,3 +1,4 @@
+//@ts-nocheck
 import toast, { Toaster } from "react-hot-toast";
 import { Button, GoBack, Input } from "../primitives";
 import { VerifyContainer, StyledDiv } from "./verify.styles";
@@ -6,6 +7,7 @@ import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { keyframes, styled } from "styled-components";
+import Fail from "../../assets/icons/fail.svg";
 
 const spinAnimation = keyframes`
   0% {
@@ -37,6 +39,26 @@ const ProgressStatus = styled.div`
   padding: 2rem;
   border-radius: 4px;
 `;
+
+export const Failed = () => {
+  return (
+    <StyledDiv className="verify">
+      <GoBack style={{ maxWidth: "50rem", margin: "1rem auto" }} />
+      <VerifyContainer>
+        <div className="form-container">
+          <div className="failed-container">
+            <h1>Verificatio Failed.</h1>
+            <img src={Fail} alt="filed" />
+            <p>
+              Looks like you dont have bookface access. please try again with
+              another ID
+            </p>
+          </div>
+        </div>
+      </VerifyContainer>
+    </StyledDiv>
+  );
+};
 
 export const QRCode = ({ appUrl }: any) => {
   return (
@@ -82,20 +104,19 @@ export const Verify = () => {
   const getStatus = async (callbackId: string) => {
     try {
       const { data } = await axios.get(
-        `https://ycdeals.onrender.com/status/${callbackId}`
+        `http://192.168.0.194:8000/status/${callbackId}`
       );
 
-      console.log(data.status);
       setStatus(data.status);
-
-      // setTimeout(() => {
-      //   setStatus("VERIFIED");
-      //   navigate(`/deal-detail`, {
-      //     state: {
-      //       dealID: dealID,
-      //     },
-      //   });
-      // }, 3000);
+      console.log(data.status);
+      setTimeout(() => {
+        setStatus("FAILED");
+        navigate(`/deal-detail`, {
+          state: {
+            dealID: dealID,
+          },
+        });
+      }, 3000);
 
       if (data.status === "VERIFIED") {
         navigate(`/deal-detail`, {
@@ -119,12 +140,16 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
-    const { data } = await axios.post(`https://ycdeals.onrender.com/home`, {
+    const { data } = await axios.post(`http://192.168.0.194:8000/home`, {
       email,
     });
     setCallbackId(data.callbackId);
     setAppUrl(data.url);
   };
+
+  if (status === "FAILED") {
+    return <Failed />;
+  }
   return (
     <StyledDiv className="verify">
       <GoBack style={{ maxWidth: "50rem", margin: "1rem auto" }} />

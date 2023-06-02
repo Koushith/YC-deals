@@ -11,13 +11,11 @@ import axios from "axios";
 export const HomePage = () => {
   const [deals, setDeals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log("deals", deals.length);
   const navigate = useNavigate();
 
   const fetchAllDeals = async () => {
     try {
       setIsLoading(true);
-
       const { data } = await axios.get(`https://ycdeals.onrender.com/deals`);
       setDeals(data?.allDeals);
       setIsLoading(false);

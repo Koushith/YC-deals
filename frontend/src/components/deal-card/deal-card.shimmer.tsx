@@ -81,13 +81,35 @@ export const DealShimmer = () => {
               <Shimmer className="deal-title-shimmer" />
             </h2>
             <div>
-              <p className="deal-shortdesc">
+              <div className="deal-shortdesc">
                 <Shimmer className="short-desc-shimmer" />
-              </p>
+              </div>
             </div>
-            <p className="website">
+            <div className="website">
               <Shimmer className="website-shimmer" />
-            </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          {" "}
+          <Shimmer className="btn" />
+        </div>
+      </CardContainer>
+      <CardContainer>
+        <div className="left">
+          <Shimmer height="200" width="200" className="logo" />
+          <div className="deal-info">
+            <div className="deal-title">
+              <Shimmer className="deal-title-shimmer" />
+            </div>
+            <div>
+              <div className="deal-shortdesc">
+                <Shimmer className="short-desc-shimmer" />
+              </div>
+            </div>
+            <div className="website">
+              <Shimmer className="website-shimmer" />
+            </div>
           </div>
         </div>
         <div>
@@ -103,13 +125,13 @@ export const DealShimmer = () => {
               <Shimmer className="deal-title-shimmer" />
             </h2>
             <div>
-              <p className="deal-shortdesc">
+              <div className="deal-shortdesc">
                 <Shimmer className="short-desc-shimmer" />
-              </p>
+              </div>
             </div>
-            <p className="website">
+            <div className="website">
               <Shimmer className="website-shimmer" />
-            </p>
+            </div>
           </div>
         </div>
         <div>
@@ -125,13 +147,13 @@ export const DealShimmer = () => {
               <Shimmer className="deal-title-shimmer" />
             </h2>
             <div>
-              <p className="deal-shortdesc">
+              <div className="deal-shortdesc">
                 <Shimmer className="short-desc-shimmer" />
-              </p>
+              </div>
             </div>
-            <p className="website">
+            <div className="website">
               <Shimmer className="website-shimmer" />
-            </p>
+            </div>
           </div>
         </div>
         <div>
@@ -147,35 +169,13 @@ export const DealShimmer = () => {
               <Shimmer className="deal-title-shimmer" />
             </h2>
             <div>
-              <p className="deal-shortdesc">
+              <div className="deal-shortdesc">
                 <Shimmer className="short-desc-shimmer" />
-              </p>
+              </div>
             </div>
-            <p className="website">
+            <div className="website">
               <Shimmer className="website-shimmer" />
-            </p>
-          </div>
-        </div>
-        <div>
-          {" "}
-          <Shimmer className="btn" />
-        </div>
-      </CardContainer>
-      <CardContainer>
-        <div className="left">
-          <Shimmer height="200" width="200" className="logo" />
-          <div className="deal-info">
-            <h2 className="deal-title">
-              <Shimmer className="deal-title-shimmer" />
-            </h2>
-            <div>
-              <p className="deal-shortdesc">
-                <Shimmer className="short-desc-shimmer" />
-              </p>
             </div>
-            <p className="website">
-              <Shimmer className="website-shimmer" />
-            </p>
           </div>
         </div>
         <div>

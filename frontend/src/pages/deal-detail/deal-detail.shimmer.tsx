@@ -90,16 +90,16 @@ export const DealDeailsShimmer = () => {
           <h2>
             <Shimmer className="info-sh" />
           </h2>
-          <p className="title">
+          <div className="title">
             <Shimmer className="title-sh" />
-          </p>
+          </div>
           <div className="meta-info">
-            <p className="website">
+            <div className="website">
               <Shimmer className="website-sh" />
-            </p>
-            <p className="website">
+            </div>
+            <div className="website">
               <Shimmer className="website-sh" />
-            </p>
+            </div>
           </div>
         </div>
       </div>
