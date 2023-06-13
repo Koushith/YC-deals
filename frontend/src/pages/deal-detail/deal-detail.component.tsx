@@ -9,6 +9,7 @@ import {
 } from "./deal-detail.styles";
 import { GoBack } from "../../components/primitives";
 import { DealDeailsShimmer } from "./deal-detail.shimmer";
+import { BACKEND_API_ENDPOINT } from "../../utils";
 
 export const DealDetailPage = () => {
   const [deal, setDeal] = useState([]);
@@ -20,7 +21,7 @@ export const DealDetailPage = () => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        `http://192.168.0.196:8000/deals/${location?.state?.dealID}`
+        `${BACKEND_API_ENDPOINT}/deals/${location?.state?.dealID}`
       );
       console.log(data);
       setDeal(data?.deal);

@@ -88,12 +88,10 @@ const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getStatus = getStatus;
 const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     if (!req.params.id) {
         res.status(400).send(`400 - Bad Request: callbackId is required`);
         return;
     }
-    console.log("id", req.params.id);
     if (!req.body) {
         res.status(400).send(`400 - Bad Request: body is required`);
         return;
@@ -107,31 +105,10 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return;
         }
         const callbackId = req.params.id;
-        console.log("callback id-------", callbackId);
         const proofs = reqBody.proofs;
-        console.log("prooofs--------", proofs);
-        let first = proofs[0];
-        console.log("first----", first);
-        //---------------------------
-        const stringToNumberConversion = Number((_a = first === null || first === void 0 ? void 0 : first.parameters) === null || _a === void 0 ? void 0 : _a.userId);
-        const finalProof = [
-            ...proofs,
-            { parameters: { userId: stringToNumberConversion } },
-        ];
-        console.log("str conversion", stringToNumberConversion);
-        console.log("final proof", finalProof);
-        //------------------------------
-        // Writing proofs array to a local file
-        // fs.writeFile("proofs.json", finalProof, (err) => {
-        //   if (err) {
-        //     res.status(500).send(`Failed to write proofs to file: ${err}`);
-        //     return;
-        //   }
-        //   console.log("Proofs written to file");
-        // });
+        const first = proofs[0];
         // verify the proof
         const isValidProofs = yield reclaim.verifyCorrectnessOfProofs([first]);
-        console.log("isValid??", isValidProofs);
         if (!isValidProofs) {
             yield prisma.yc_deals.update({
                 where: {

@@ -7,6 +7,7 @@ import { HomePageContainer, TitleContainer } from "./home.styles";
 import { DealShimmer } from "../../components/deal-card/deal-card.shimmer";
 import DealIcon from "../../assets/icons/deal.svg";
 import axios from "axios";
+import { BACKEND_API_ENDPOINT } from "../../utils";
 
 export const HomePage = () => {
   const [deals, setDeals] = useState([]);
@@ -16,7 +17,7 @@ export const HomePage = () => {
   const fetchAllDeals = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(`http://192.168.0.196:8000/deals`);
+      const { data } = await axios.get(`${BACKEND_API_ENDPOINT}/deals`);
       setDeals(data?.allDeals);
       setIsLoading(false);
     } catch (error) {

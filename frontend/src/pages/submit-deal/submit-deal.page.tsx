@@ -10,6 +10,7 @@ import {
 } from "../../components/primitives";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_API_ENDPOINT } from "../../utils";
 
 const initialState = {
   company: "",
@@ -38,7 +39,7 @@ export const SubmitDeal = () => {
       setIsLoading(true);
       const toastId = toast.success("Submitting Deal!!");
       const res = await axios.post(
-        `http://192.168.0.194:8000/deals/submit-deal`,
+        `${BACKEND_API_ENDPOINT}/deals/submit-deal`,
         {
           companyName: formData.company,
           shortDescription: formData.shortDescription,

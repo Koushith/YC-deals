@@ -8,6 +8,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { keyframes, styled } from "styled-components";
 import Fail from "../../assets/icons/fail.svg";
+import { BACKEND_API_ENDPOINT } from "../../utils";
 
 const spinAnimation = keyframes`
   0% {
@@ -104,7 +105,7 @@ export const Verify = () => {
   const getStatus = async (callbackId: string) => {
     try {
       const { data } = await axios.get(
-        `http://192.168.0.196:8000/status/${callbackId}`
+        `${BACKEND_API_ENDPOINT}/status/${callbackId}`
       );
 
       setStatus(data.status);
@@ -132,7 +133,7 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
-    const { data } = await axios.post(`http://192.168.0.196:8000/home`, {
+    const { data } = await axios.post(`${BACKEND_API_ENDPOINT}/home`, {
       email,
     });
     setCallbackId(data.callbackId);
