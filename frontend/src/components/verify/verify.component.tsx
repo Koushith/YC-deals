@@ -104,19 +104,11 @@ export const Verify = () => {
   const getStatus = async (callbackId: string) => {
     try {
       const { data } = await axios.get(
-        `http://192.168.0.194:8000/status/${callbackId}`
+        `http://192.168.0.196:8000/status/${callbackId}`
       );
 
       setStatus(data.status);
       console.log(data.status);
-      setTimeout(() => {
-        setStatus("FAILED");
-        navigate(`/deal-detail`, {
-          state: {
-            dealID: dealID,
-          },
-        });
-      }, 3000);
 
       if (data.status === "VERIFIED") {
         navigate(`/deal-detail`, {
@@ -140,7 +132,7 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
-    const { data } = await axios.post(`http://192.168.0.194:8000/home`, {
+    const { data } = await axios.post(`http://192.168.0.196:8000/home`, {
       email,
     });
     setCallbackId(data.callbackId);

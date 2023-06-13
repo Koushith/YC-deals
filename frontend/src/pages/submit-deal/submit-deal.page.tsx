@@ -38,7 +38,7 @@ export const SubmitDeal = () => {
       setIsLoading(true);
       const toastId = toast.success("Submitting Deal!!");
       const res = await axios.post(
-        `https://ycdeals.onrender.com/deals/submit-deal`,
+        `http://192.168.0.194:8000/deals/submit-deal`,
         {
           companyName: formData.company,
           shortDescription: formData.shortDescription,

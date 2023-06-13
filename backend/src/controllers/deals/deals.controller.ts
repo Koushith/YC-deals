@@ -14,6 +14,7 @@ export const submitDeal = async (req: Request, res: Response) => {
     website,
   } = req.body;
 
+  console.log(req.body)
   if (!email || !dealsDetails || !redeemDetails) {
     res.status(400).json({
       message: "Please fillout the mandatory fields",

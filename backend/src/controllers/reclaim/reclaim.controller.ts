@@ -15,7 +15,7 @@ const { generateUuid } = reclaimprotocol.utils;
 
 export const home = async (req: Request, res: Response) => {
   const { email } = req.body;
-  console.log("body- email");
+
   if (!email) {
     res.status(400).send("400- Bad Request- email is required");
     return;
@@ -98,6 +98,7 @@ export const postStatus = async (req: Request, res: Response) => {
     res.status(400).send(`400 - Bad Request: callbackId is required`);
     return;
   }
+  console.log("id", req.params.id);
 
   if (!req.body) {
     res.status(400).send(`400 - Bad Request: body is required`);
@@ -105,9 +106,6 @@ export const postStatus = async (req: Request, res: Response) => {
   }
   try {
     let reqBody: any;
-
-  
-
     reqBody = JSON.parse(decodeURIComponent(req.body));
     console.log("parsed req body", reqBody);
 
@@ -123,32 +121,46 @@ export const postStatus = async (req: Request, res: Response) => {
     const proofs = reqBody.proofs as Proof[];
     console.log("prooofs--------", proofs);
 
-    let first= proofs[0]
- 
-    const stringToNumberConversion = Number(first?.parameters?.userId)
-    const finalProof = [...proofs, { parameters: { "userId": stringToNumberConversion } }];
-   console.log("str conversion", stringToNumberConversion)
-    console.log("final prood", finalProof)
-    
+    let first = proofs[0];
+
+    console.log("first----", first);
+
+    //---------------------------
+    const stringToNumberConversion = Number(first?.parameters?.userId);
+    const finalProof = [
+      ...proofs,
+      { parameters: { userId: stringToNumberConversion } },
+    ];
+    console.log("str conversion", stringToNumberConversion);
+    console.log("final proof", finalProof);
+
+    //------------------------------
 
     // Writing proofs array to a local file
-    fs.writeFile("proofs.json", finalProof, (err) => {
-      if (err) {
-        res.status(500).send(`Failed to write proofs to file: ${err}`);
-        return;
-      }
-      console.log("Proofs written to file");
-    });
+    // fs.writeFile("proofs.json", finalProof, (err) => {
+    //   if (err) {
+    //     res.status(500).send(`Failed to write proofs to file: ${err}`);
+    //     return;
+    //   }
+    //   console.log("Proofs written to file");
+    // });
 
     // verify the proof
-    const isValidProofs = await reclaim.verifyCorrectnessOfProofs(finalProof);
+    const isValidProofs = await reclaim.verifyCorrectnessOfProofs([first]);
     console.log("isValid??", isValidProofs);
 
     if (!isValidProofs) {
+      await prisma.yc_deals.update({
+        where: {
+          callback_id: callbackId,
+        },
+        data: {
+          status: "FAILED",
+        },
+      });
       res.status(400).send(`Bad requests. Invalid proofs`);
       return;
     }
-
 
     const record = await prisma.yc_deals.findFirst({
       where: {
@@ -165,7 +177,7 @@ export const postStatus = async (req: Request, res: Response) => {
         where: {
           id: record.id,
         },
-        data: {  
+        data: {
           status: "VERIFIED",
           proofs: JSON.stringify(proofs),
         },

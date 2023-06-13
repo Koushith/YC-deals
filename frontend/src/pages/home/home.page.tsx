@@ -16,7 +16,7 @@ export const HomePage = () => {
   const fetchAllDeals = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(`https://ycdeals.onrender.com/deals`);
+      const { data } = await axios.get(`http://192.168.0.196:8000/deals`);
       setDeals(data?.allDeals);
       setIsLoading(false);
     } catch (error) {
@@ -26,6 +26,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     fetchAllDeals();
+    console.log(deals.length);
   }, []);
 
   const navigateToNewDeal = () => {
@@ -49,7 +50,7 @@ export const HomePage = () => {
         ))}
       </div>
 
-      {deals.length < 0 && (
+      {deals.length <= 0 && (
         <div className="no-deals-found">
           <img src={DealIcon} />
           <h1>No Deals Found. </h1>

@@ -20,7 +20,7 @@ export const DealDetailPage = () => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        `https://yc-deals.netlify.app/deals/${location?.state?.dealID}`
+        `http://192.168.0.196:8000/deals/${location?.state?.dealID}`
       );
       console.log(data);
       setDeal(data?.deal);

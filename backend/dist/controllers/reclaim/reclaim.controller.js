@@ -9,15 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postStatus = exports.getStatus = exports.home = void 0;
 const validators_1 = require("../../utils/validators");
 const client_1 = require("@prisma/client");
 const reclaim_sdk_1 = require("@reclaimprotocol/reclaim-sdk");
-const fs_1 = __importDefault(require("fs"));
 const CALLBACK_URL = process.env.CALLBACK_URL + "/" + "callback/";
 const CALLBACK_ID_PREFIX = "bookface-";
 const prisma = new client_1.PrismaClient();
@@ -25,7 +21,6 @@ const reclaim = new reclaim_sdk_1.reclaimprotocol.Reclaim();
 const { generateUuid } = reclaim_sdk_1.reclaimprotocol.utils;
 const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.body;
-    console.log("body- email");
     if (!email) {
         res.status(400).send("400- Bad Request- email is required");
         return;
@@ -98,6 +93,7 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.status(400).send(`400 - Bad Request: callbackId is required`);
         return;
     }
+    console.log("id", req.params.id);
     if (!req.body) {
         res.status(400).send(`400 - Bad Request: body is required`);
         return;
@@ -115,22 +111,36 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const proofs = reqBody.proofs;
         console.log("prooofs--------", proofs);
         let first = proofs[0];
+        console.log("first----", first);
+        //---------------------------
         const stringToNumberConversion = Number((_a = first === null || first === void 0 ? void 0 : first.parameters) === null || _a === void 0 ? void 0 : _a.userId);
-        const finalProof = [...proofs, { parameters: { "userId": stringToNumberConversion } }];
+        const finalProof = [
+            ...proofs,
+            { parameters: { userId: stringToNumberConversion } },
+        ];
         console.log("str conversion", stringToNumberConversion);
-        console.log("final prood", finalProof);
+        console.log("final proof", finalProof);
+        //------------------------------
         // Writing proofs array to a local file
-        fs_1.default.writeFile("proofs.json", finalProof, (err) => {
-            if (err) {
-                res.status(500).send(`Failed to write proofs to file: ${err}`);
-                return;
-            }
-            console.log("Proofs written to file");
-        });
+        // fs.writeFile("proofs.json", finalProof, (err) => {
+        //   if (err) {
+        //     res.status(500).send(`Failed to write proofs to file: ${err}`);
+        //     return;
+        //   }
+        //   console.log("Proofs written to file");
+        // });
         // verify the proof
-        const isValidProofs = yield reclaim.verifyCorrectnessOfProofs(finalProof);
+        const isValidProofs = yield reclaim.verifyCorrectnessOfProofs([first]);
         console.log("isValid??", isValidProofs);
         if (!isValidProofs) {
+            yield prisma.yc_deals.update({
+                where: {
+                    callback_id: callbackId,
+                },
+                data: {
+                    status: "FAILED",
+                },
+            });
             res.status(400).send(`Bad requests. Invalid proofs`);
             return;
         }
