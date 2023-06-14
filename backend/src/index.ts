@@ -16,12 +16,20 @@ import {
 dotenv.config();
 
 const PORT = process.env.PORT;
+const ALLOWED_ORIGINS = ["https://yc-deals.vercel.app"];
 const app: Express = express();
 
 app.use(express.json());
+
 app.use(
   cors({
-    origin: "https://yc-deals.vercel.app/",
+    origin: (origin, callback) => {
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 
