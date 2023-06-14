@@ -56,8 +56,8 @@ npm start
 <img width="1792" alt="Screenshot 2023-06-15 at 1 42 59 AM" src="https://github.com/Koushith/YC-deals/assets/30016242/cc47815e-d0a4-410f-8882-60b66538ada8">
 
 ![2023-06-15-01-45-yc-deals vercel app](https://github.com/Koushith/YC-deals/assets/30016242/c52e8989-d1bd-4dd6-8f83-69ac0664c8ad)
+<img width="1792" alt="image" src="https://github.com/Koushith/YC-deals/assets/30016242/0fe00179-972e-4bfc-b396-259234663229">
 <img width="1792" alt="image" src="https://github.com/Koushith/YC-deals/assets/30016242/2c930a9f-b11f-46e8-bc7e-fb024b91fcdf">
-
 <img width="1792" alt="image" src="https://github.com/Koushith/YC-deals/assets/30016242/c62eae13-8920-4093-bdf3-cbeeab5c7b1a">
 <img width="1792" alt="image" src="https://github.com/Koushith/YC-deals/assets/30016242/290e57f2-8890-4519-9827-ab1f67b8e978">
 <img width="1792" alt="image" src="https://github.com/Koushith/YC-deals/assets/30016242/eea622ff-97aa-4651-bb83-297d10a8740f">
