@@ -15,12 +15,15 @@ import {
 
 dotenv.config();
 
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT;
 const app: Express = express();
 
 app.use(express.json());
-app.use(cors());
-
+app.use(
+  cors({
+    origin: "https://yc-deals.vercel.app/",
+  })
+);
 
 //Reclaim related routes
 app.post("/home", home);
