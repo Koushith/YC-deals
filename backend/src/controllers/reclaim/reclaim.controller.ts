@@ -4,6 +4,8 @@ import express, { Express, Request, Response } from "express";
 import { validateEmail } from "../../utils/validators";
 import { PrismaClient } from "@prisma/client";
 import { Proof, reclaimprotocol } from "@reclaimprotocol/reclaim-sdk";
+import fs from "fs";
+import nodemailer from "nodemailer";
 
 const CALLBACK_URL = process.env.CALLBACK_URL! + "/" + "callback/";
 const CALLBACK_ID_PREFIX = "bookface-";
@@ -29,6 +31,7 @@ export const home = async (req: Request, res: Response) => {
 
   try {
     const callbackId = CALLBACK_ID_PREFIX + generateUuid();
+
     const template = reclaim
       .connect(
         "Prove that you have bookface login",
@@ -86,6 +89,34 @@ export const getStatus = async (req: Request, res: Response) => {
       callbackId: query?.callback_id,
       status: query?.status,
     });
+
+    //test
+    let transporter = nodemailer.createTransport({
+      host: "smtp.mandrillapp.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: "koushith@creatoros.co", // generated ethereal user
+        pass: "324967c52b1886c3d096e0b9666b944e-us17", // generated ethereal password
+      },
+    });
+
+    let info = transporter.sendMail(
+      {
+        from: "koushith@creatoros.co",
+        to: "koushith97@gmail.com",
+        subject: "Hello ✔", // Subject line
+        text: "Hello world?", // plain text body
+        html: "<b>Hello world?</b>", // html body
+      },
+      (err) => {
+        if (err) {
+          console.log("couldnt send mail", err);
+        }
+      }
+    );
+
+    //
   } catch (error) {
     res.status(500).send(`500 - Some erroor occured`);
   }
@@ -96,6 +127,7 @@ export const postStatus = async (req: Request, res: Response) => {
     res.status(400).send(`400 - Bad Request: callbackId is required`);
     return;
   }
+  console.log("id", req.params.id);
 
   if (!req.body) {
     res.status(400).send(`400 - Bad Request: body is required`);
@@ -112,11 +144,39 @@ export const postStatus = async (req: Request, res: Response) => {
     }
 
     const callbackId = req.params.id;
+
+    console.log("callback id-------", callbackId);
+
     const proofs = reqBody.proofs as Proof[];
-    const first = proofs[0];
+    console.log("prooofs--------", proofs);
+
+    let first = proofs[0];
+
+    console.log("first----", first);
+
+    //---------------------------
+    const stringToNumberConversion = Number(first?.parameters?.userId);
+    const finalProof = [
+      ...proofs,
+      { parameters: { userId: stringToNumberConversion } },
+    ];
+    console.log("str conversion", stringToNumberConversion);
+    console.log("final proof", finalProof);
+
+    //------------------------------
+
+    // Writing proofs array to a local file
+    // fs.writeFile("proofs.json", finalProof, (err) => {
+    //   if (err) {
+    //     res.status(500).send(`Failed to write proofs to file: ${err}`);
+    //     return;
+    //   }
+    //   console.log("Proofs written to file");
+    // });
 
     // verify the proof
     const isValidProofs = await reclaim.verifyCorrectnessOfProofs([first]);
+    console.log("isValid??", isValidProofs);
 
     if (!isValidProofs) {
       await prisma.yc_deals.update({
@@ -152,6 +212,15 @@ export const postStatus = async (req: Request, res: Response) => {
         },
       });
     }
+
+    //send email after verification
+
+    let transporter = nodemailer.createTransport({
+      host: "gmail",
+      auth: {
+        user: "",
+      },
+    });
 
     res.send(`<div
 	style="

@@ -9,11 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postStatus = exports.getStatus = exports.home = void 0;
 const validators_1 = require("../../utils/validators");
 const client_1 = require("@prisma/client");
 const reclaim_sdk_1 = require("@reclaimprotocol/reclaim-sdk");
+const nodemailer_1 = __importDefault(require("nodemailer"));
 const CALLBACK_URL = process.env.CALLBACK_URL + "/" + "callback/";
 const CALLBACK_ID_PREFIX = "bookface-";
 const prisma = new client_1.PrismaClient();
@@ -81,6 +85,28 @@ const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             callbackId: query === null || query === void 0 ? void 0 : query.callback_id,
             status: query === null || query === void 0 ? void 0 : query.status,
         });
+        //test
+        let transporter = nodemailer_1.default.createTransport({
+            host: "smtp.mandrillapp.com",
+            port: 587,
+            secure: false,
+            auth: {
+                user: "koushith@creatoros.co",
+                pass: "324967c52b1886c3d096e0b9666b944e-us17", // generated ethereal password
+            },
+        });
+        let info = transporter.sendMail({
+            from: "koushith@creatoros.co",
+            to: "koushith97@gmail.com",
+            subject: "Hello ✔",
+            text: "Hello world?",
+            html: "<b>Hello world?</b>", // html body
+        }, (err) => {
+            if (err) {
+                console.log("couldnt send mail", err);
+            }
+        });
+        //
     }
     catch (error) {
         res.status(500).send(`500 - Some erroor occured`);
@@ -88,10 +114,12 @@ const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getStatus = getStatus;
 const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     if (!req.params.id) {
         res.status(400).send(`400 - Bad Request: callbackId is required`);
         return;
     }
+    console.log("id", req.params.id);
     if (!req.body) {
         res.status(400).send(`400 - Bad Request: body is required`);
         return;
@@ -105,10 +133,31 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             return;
         }
         const callbackId = req.params.id;
+        console.log("callback id-------", callbackId);
         const proofs = reqBody.proofs;
-        const first = proofs[0];
+        console.log("prooofs--------", proofs);
+        let first = proofs[0];
+        console.log("first----", first);
+        //---------------------------
+        const stringToNumberConversion = Number((_a = first === null || first === void 0 ? void 0 : first.parameters) === null || _a === void 0 ? void 0 : _a.userId);
+        const finalProof = [
+            ...proofs,
+            { parameters: { userId: stringToNumberConversion } },
+        ];
+        console.log("str conversion", stringToNumberConversion);
+        console.log("final proof", finalProof);
+        //------------------------------
+        // Writing proofs array to a local file
+        // fs.writeFile("proofs.json", finalProof, (err) => {
+        //   if (err) {
+        //     res.status(500).send(`Failed to write proofs to file: ${err}`);
+        //     return;
+        //   }
+        //   console.log("Proofs written to file");
+        // });
         // verify the proof
         const isValidProofs = yield reclaim.verifyCorrectnessOfProofs([first]);
+        console.log("isValid??", isValidProofs);
         if (!isValidProofs) {
             yield prisma.yc_deals.update({
                 where: {
@@ -140,6 +189,13 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 },
             });
         }
+        //send email after verification
+        let transporter = nodemailer_1.default.createTransport({
+            host: "gmail",
+            auth: {
+                user: "",
+            },
+        });
         res.send(`<div
 	style="
 	  width: 100%;
