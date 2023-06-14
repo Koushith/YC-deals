@@ -51,7 +51,7 @@ export const HomePage = () => {
         ))}
       </div>
 
-      {deals.length <= 0 && isLoading && (
+      {deals.length <= 0 && !isLoading && (
         <div className="no-deals-found">
           <img src={DealIcon} />
           <h1>No Deals Found. </h1>

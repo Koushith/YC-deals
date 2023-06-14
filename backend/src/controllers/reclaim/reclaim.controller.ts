@@ -1,11 +1,9 @@
 //@ts-nocheck
 
-import express, { Express, Request, Response } from "express";
+import { Request, Response } from "express";
 import { validateEmail } from "../../utils/validators";
 import { PrismaClient } from "@prisma/client";
 import { Proof, reclaimprotocol } from "@reclaimprotocol/reclaim-sdk";
-import fs from "fs";
-import nodemailer from "nodemailer";
 
 const CALLBACK_URL = process.env.CALLBACK_URL! + "/" + "callback/";
 const CALLBACK_ID_PREFIX = "bookface-";
@@ -15,7 +13,9 @@ const reclaim = new reclaimprotocol.Reclaim();
 const { generateUuid } = reclaimprotocol.utils;
 
 export const home = async (req: Request, res: Response) => {
-  const { email } = req.body;
+  const { email, dealID } = req.body;
+
+  console.log("dealID", dealID);
 
   if (!email) {
     res.status(400).send("400- Bad Request- email is required");
@@ -30,39 +30,54 @@ export const home = async (req: Request, res: Response) => {
   }
 
   try {
-    const callbackId = CALLBACK_ID_PREFIX + generateUuid();
-
-    const template = reclaim
-      .connect(
-        "Prove that you have bookface login",
-        [
-          {
-            provider: "yc-login",
-            payload: {},
-            templateClaimId: reclaimprotocol.utils.generateUuid(),
-          },
-        ],
-        CALLBACK_URL
-      )
-      .generateTemplate(callbackId);
-
-    const templateUrl = template.url;
-    const templateId = template.id;
-
-    const query = await prisma.yc_deals.create({
-      data: {
-        callback_id: callbackId,
-        email: emailStr,
-        template_id: templateId,
-        template_url: templateUrl,
-        status: "PENDING",
+    const isEmailExist = await prisma.yc_deals.findMany({
+      where: {
+        email: { equals: emailStr },
+        status: { equals: "VERIFIED" },
       },
     });
 
-    res.status(200).json({
-      url: query.template_url,
-      callbackId: query.callback_id,
-    });
+    if (isEmailExist.length > 0) {
+      res.status(200).json({
+        status: 302,
+        message: "Email already exist and it is verified",
+        data: isEmailExist,
+      });
+    } else {
+      const callbackId = CALLBACK_ID_PREFIX + generateUuid();
+
+      const template = reclaim
+        .connect(
+          "Prove that you have bookface login",
+          [
+            {
+              provider: "yc-login",
+              payload: {},
+              templateClaimId: reclaimprotocol.utils.generateUuid(),
+            },
+          ],
+          CALLBACK_URL
+        )
+        .generateTemplate(callbackId);
+
+      const templateUrl = template.url;
+      const templateId = template.id;
+
+      const query = await prisma.yc_deals.create({
+        data: {
+          callback_id: callbackId,
+          email: emailStr,
+          template_id: templateId,
+          template_url: templateUrl,
+          status: "PENDING",
+        },
+      });
+
+      res.status(200).json({
+        url: query.template_url,
+        callbackId: query.callback_id,
+      });
+    }
   } catch (error) {
     res.status(500).send(`Some error occured ${error}`);
   }
@@ -89,34 +104,6 @@ export const getStatus = async (req: Request, res: Response) => {
       callbackId: query?.callback_id,
       status: query?.status,
     });
-
-    //test
-    let transporter = nodemailer.createTransport({
-      host: "smtp.mandrillapp.com",
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: "koushith@creatoros.co", // generated ethereal user
-        pass: "324967c52b1886c3d096e0b9666b944e-us17", // generated ethereal password
-      },
-    });
-
-    let info = transporter.sendMail(
-      {
-        from: "koushith@creatoros.co",
-        to: "koushith97@gmail.com",
-        subject: "Hello ✔", // Subject line
-        text: "Hello world?", // plain text body
-        html: "<b>Hello world?</b>", // html body
-      },
-      (err) => {
-        if (err) {
-          console.log("couldnt send mail", err);
-        }
-      }
-    );
-
-    //
   } catch (error) {
     res.status(500).send(`500 - Some erroor occured`);
   }
@@ -136,7 +123,6 @@ export const postStatus = async (req: Request, res: Response) => {
   try {
     let reqBody: any;
     reqBody = JSON.parse(decodeURIComponent(req.body));
-    console.log("parsed req body", reqBody);
 
     if (!reqBody.proofs || !reqBody.proofs.length) {
       res.status(400).send(`400 - Bad Request: proofs are required`);
@@ -144,35 +130,7 @@ export const postStatus = async (req: Request, res: Response) => {
     }
 
     const callbackId = req.params.id;
-
-    console.log("callback id-------", callbackId);
-
     const proofs = reqBody.proofs as Proof[];
-    console.log("prooofs--------", proofs);
-
-    let first = proofs[0];
-
-    console.log("first----", first);
-
-    //---------------------------
-    const stringToNumberConversion = Number(first?.parameters?.userId);
-    const finalProof = [
-      ...proofs,
-      { parameters: { userId: stringToNumberConversion } },
-    ];
-    console.log("str conversion", stringToNumberConversion);
-    console.log("final proof", finalProof);
-
-    //------------------------------
-
-    // Writing proofs array to a local file
-    // fs.writeFile("proofs.json", finalProof, (err) => {
-    //   if (err) {
-    //     res.status(500).send(`Failed to write proofs to file: ${err}`);
-    //     return;
-    //   }
-    //   console.log("Proofs written to file");
-    // });
 
     // verify the proof
     const isValidProofs = await reclaim.verifyCorrectnessOfProofs([first]);

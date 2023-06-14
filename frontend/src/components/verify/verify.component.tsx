@@ -1,14 +1,15 @@
 //@ts-nocheck
 import toast, { Toaster } from "react-hot-toast";
-import { Button, GoBack, Input } from "../primitives";
-import { VerifyContainer, StyledDiv } from "./verify.styles";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { keyframes, styled } from "styled-components";
 import Fail from "../../assets/icons/fail.svg";
+import deal from "../../assets/icons/deal.png";
 import { BACKEND_API_ENDPOINT } from "../../utils";
+import { Button, GoBack, Input } from "../primitives";
+import { VerifyContainer, StyledDiv } from "./verify.styles";
 
 const spinAnimation = keyframes`
   0% {
@@ -93,6 +94,7 @@ export const QRCode = ({ appUrl }: any) => {
 
 export const Verify = () => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [callbackId, setCallbackId] = useState("");
   const [appUrl, setAppUrl] = useState("");
   const [status, setStatus] = useState("");
@@ -133,11 +135,23 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
+    setIsLoading(true);
     const { data } = await axios.post(`${BACKEND_API_ENDPOINT}/home`, {
       email,
+      dealID,
     });
-    setCallbackId(data.callbackId);
-    setAppUrl(data.url);
+
+    if (data.status === 302) {
+      navigate(`/deal-detail`, {
+        state: {
+          dealID: dealID,
+        },
+      });
+    } else {
+      setCallbackId(data.callbackId);
+      setAppUrl(data.url);
+    }
+    setIsLoading(false);
   };
 
   if (status === "FAILED") {
@@ -152,7 +166,7 @@ export const Verify = () => {
         ) : (
           <div className="form-container">
             <div className="logo">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA" />
+              <img src={deal} alt="logo" />
             </div>
             <h1 className="title">The Content is Locked. Verify to View</h1>
             <Input
@@ -162,7 +176,7 @@ export const Verify = () => {
               onChange={(e: any) => setEmail(e.target.value)}
             />
             <Button
-              label="Verify with BookFace Access"
+              label={isLoading ? "Loading...." : "Verify with BookFace Access"}
               style={{ width: "100%" }}
               onClick={submitHandler}
             />

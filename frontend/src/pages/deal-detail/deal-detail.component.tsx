@@ -10,6 +10,7 @@ import {
 import { GoBack } from "../../components/primitives";
 import { DealDeailsShimmer } from "./deal-detail.shimmer";
 import { BACKEND_API_ENDPOINT } from "../../utils";
+import dealIcon from "./../../assets/icons/deal.png";
 
 export const DealDetailPage = () => {
   const [deal, setDeal] = useState([]);
@@ -44,10 +45,7 @@ export const DealDetailPage = () => {
         <>
           <div className="company-info">
             <div className="logo">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcF5cMoocGXwUQCvZYa5Vd_5cSynczdUpVWA"
-                alt="logo"
-              />
+              <img src={dealIcon} alt="logo" />
             </div>
 
             <div className="info">

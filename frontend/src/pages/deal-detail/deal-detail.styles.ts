@@ -4,8 +4,12 @@ import { tablets, phones } from "../../utils";
 export const DealDetailContainer = styled.section`
   max-width: 80rem;
   margin: 2rem auto 8rem auto;
-  padding-bottom:8rem;
-
+  padding-bottom: 8rem;
+  .redeem-detail {
+    p {
+      line-height: 24px;
+    }
+  }
   .company-info {
     display: flex;
     gap: 2rem;
@@ -51,10 +55,10 @@ export const DealDetailContainer = styled.section`
   @media (${phones}) {
     padding: 2rem;
     margin: 0rem auto;
-    padding-bottom:8rem;
+    padding-bottom: 8rem;
 
-    .company-info{
-      flex-direction:column;
+    .company-info {
+      flex-direction: column;
     }
   }
 `;
