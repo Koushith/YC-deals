@@ -50,6 +50,15 @@ npm start
 
 8. Access the Application: After the frontend development server starts, you can access the application by opening your web browser and visiting the provided local URL. The application should now be up and running on your local machine.
 
+### TechStacks
+
+- React
+- Node/Express
+- PostgreSQL with Prisma ORM
+- ReclaimSDK
+
+This Application is Powered by Reclaim Protocol. to know more check this link - https://docs.reclaimprotocol.org/
+
 
 ### Screenshots
 
