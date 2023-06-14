@@ -53,7 +53,7 @@ export const HomePage = () => {
       {deals.length <= 0 && !isLoading && (
         <div className="no-deals-found">
           <img src={DealIcon} />
-          <h1>No Deals Found. </h1>
+          <h1>No Deals Found.. </h1>
         </div>
       )}
     </HomePageContainer>
