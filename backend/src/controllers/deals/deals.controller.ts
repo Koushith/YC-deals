@@ -12,9 +12,9 @@ export const submitDeal = async (req: Request, res: Response) => {
     redeemDetails,
     dealType,
     website,
+    valid_till,
   } = req.body;
 
-  console.log(req.body)
   if (!email || !dealsDetails || !redeemDetails) {
     res.status(400).json({
       message: "Please fillout the mandatory fields",
@@ -32,8 +32,11 @@ export const submitDeal = async (req: Request, res: Response) => {
         redeem_details: redeemDetails,
         deal_type: dealType,
         website: website,
+        valid_till: valid_till,
       },
     });
+
+    console.log("deal", deal);
 
     if (deal) {
       res.status(201).json({

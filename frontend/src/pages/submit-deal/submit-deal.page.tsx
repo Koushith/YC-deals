@@ -20,6 +20,7 @@ const initialState = {
   redeemDetails: "",
   dealType: "",
   website: "",
+  valid_till: "",
 };
 
 export const SubmitDeal = () => {
@@ -48,6 +49,7 @@ export const SubmitDeal = () => {
           redeemDetails: redeemDetails,
           dealType: formData.dealType,
           website: formData.website,
+          valid_till: formData.valid_till,
         }
       );
 
@@ -144,6 +146,15 @@ export const SubmitDeal = () => {
             placeholder="Promotion"
             name="dealType"
             value={formData.dealType}
+            onChange={formChangeHandler}
+          />
+
+          <Input
+            type="date"
+            label="Valid Till"
+            placeholder=""
+            name="valid_till"
+            value={formData.valid_till}
             onChange={formChangeHandler}
           />
         </div>

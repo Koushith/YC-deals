@@ -24,15 +24,29 @@ export const Navbar = () => {
 
         {open ? (
           <div className="mobile-nav">
-            {" "}
-            <img src={Close} alt="close" />
+            <img src={Close} alt="close" onClick={() => setOpen(!open)} />
           </div>
         ) : (
           <div className="mobile-nav">
-            <img src={Bars} alt="open" />
+            <img src={Bars} alt="open" onClick={() => setOpen(!open)} />
           </div>
         )}
       </nav>
+      {open && (
+        <div className="mobile-nav mob-nav">
+          <ul>
+            <li>
+              <NavLink to="/how-it-works" onClick={() => setOpen(!open)}>
+                {" "}
+                How It Works?
+              </NavLink>
+              <NavLink to="/about" onClick={() => setOpen(!open)}>
+                About
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
     </NavbarContainer>
   );
 };

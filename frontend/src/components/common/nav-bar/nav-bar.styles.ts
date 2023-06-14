@@ -4,9 +4,7 @@ import { phones, tablets } from "../../../utils";
 export const NavbarContainer = styled.div`
   background-color: #fffefe;
   box-shadow: 0 0 1px 1px rgba(33, 41, 63, 0.1);
-  /* position:fixed;
-  top:0;
-  width:100%; */
+
   nav {
     height: 8rem;
     max-width: 1122px;
@@ -23,11 +21,11 @@ export const NavbarContainer = styled.div`
       font-weight: 700;
       font-size: 1.6rem;
       text-decoration: none;
-      color:#21293c;
+      color: #21293c;
       transition: all 0.3s ease;
-        &:hover {
-          color: #ff6154;
-        }
+      &:hover {
+        color: #ff6154;
+      }
     }
 
     ul {
@@ -42,6 +40,27 @@ export const NavbarContainer = styled.div`
         transition: all 0.3s ease;
         &:hover {
           color: #ff6154;
+        }
+      }
+    }
+  }
+  .mob-nav {
+    transition: all 0.3s ease;
+    ul {
+      list-style: none;
+      li {
+        display: flex;
+        flex-direction: column;
+        a {
+          text-decoration: none;
+          font-size: 1.4rem;
+          font-weight: 400;
+          color: #4b587c;
+          margin-bottom: 2rem;
+          transition: all 0.3s ease;
+          &:hover {
+            color: #ff6154;
+          }
         }
       }
     }

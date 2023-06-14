@@ -13,8 +13,7 @@ exports.getDealById = exports.getAllDeals = exports.submitDeal = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const submitDeal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { companyName, shortDescription, email, dealsDetails, redeemDetails, dealType, website, } = req.body;
-    console.log(req.body);
+    const { companyName, shortDescription, email, dealsDetails, redeemDetails, dealType, website, valid_till, } = req.body;
     if (!email || !dealsDetails || !redeemDetails) {
         res.status(400).json({
             message: "Please fillout the mandatory fields",
@@ -31,8 +30,10 @@ const submitDeal = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 redeem_details: redeemDetails,
                 deal_type: dealType,
                 website: website,
+                valid_till: valid_till,
             },
         });
+        console.log("deal", deal);
         if (deal) {
             res.status(201).json({
                 message: "Deal created Successfully",
