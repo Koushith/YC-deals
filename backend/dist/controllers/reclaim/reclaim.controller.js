@@ -122,6 +122,7 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         const callbackId = req.params.id;
         const proofs = reqBody.proofs;
+        const first = proofs[0];
         // verify the proof
         const isValidProofs = yield reclaim.verifyCorrectnessOfProofs([first]);
         console.log("isValid??", isValidProofs);
@@ -156,13 +157,6 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 },
             });
         }
-        //send email after verification
-        let transporter = nodemailer.createTransport({
-            host: "gmail",
-            auth: {
-                user: "",
-            },
-        });
         res.send(`<div
 	style="
 	  width: 100%;

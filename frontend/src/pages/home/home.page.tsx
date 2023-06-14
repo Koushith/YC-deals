@@ -27,7 +27,6 @@ export const HomePage = () => {
 
   useEffect(() => {
     fetchAllDeals();
-    console.log(deals.length);
   }, []);
 
   const navigateToNewDeal = () => {

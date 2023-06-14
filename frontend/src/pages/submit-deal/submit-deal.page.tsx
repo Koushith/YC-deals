@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormContainer, SubmitDealContainer } from "./submit-deal.styles";
 import axios from "axios";
 import "react-quill/dist/quill.snow.css";
@@ -28,6 +28,7 @@ export const SubmitDeal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dealDetails, setDealDetails] = useState("");
   const [redeemDetails, setRedeemDetails] = useState("");
+  const [isBtnDisabled, setIsButtonDisabled] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,7 +39,7 @@ export const SubmitDeal = () => {
   const submitHandler = async () => {
     try {
       setIsLoading(true);
-      const toastId = toast.success("Submitting Deal!!");
+      const toastId = toast.loading("Submitting Deal!!");
       const res = await axios.post(
         `${BACKEND_API_ENDPOINT}/deals/submit-deal`,
         {
@@ -64,8 +65,9 @@ export const SubmitDeal = () => {
 
       toast.dismiss(toastId);
     } catch (error) {
-      console.log("something went wrong", error);
       toast.error("Something went wrong while creating a deal");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -162,6 +164,7 @@ export const SubmitDeal = () => {
         <Button
           label={isLoading ? "Submitting" : "Submit"}
           onClick={submitHandler}
+          disabled={isBtnDisabled}
           className="submit-btn"
         />
       </FormContainer>

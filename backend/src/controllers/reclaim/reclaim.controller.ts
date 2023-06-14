@@ -131,6 +131,7 @@ export const postStatus = async (req: Request, res: Response) => {
 
     const callbackId = req.params.id;
     const proofs = reqBody.proofs as Proof[];
+    const first = proofs[0];
 
     // verify the proof
     const isValidProofs = await reclaim.verifyCorrectnessOfProofs([first]);
@@ -170,15 +171,6 @@ export const postStatus = async (req: Request, res: Response) => {
         },
       });
     }
-
-    //send email after verification
-
-    let transporter = nodemailer.createTransport({
-      host: "gmail",
-      auth: {
-        user: "",
-      },
-    });
 
     res.send(`<div
 	style="

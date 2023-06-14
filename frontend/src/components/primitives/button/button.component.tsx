@@ -5,12 +5,19 @@ interface ButtonComponentProps {
   onClick?: () => void;
   style?: any;
   className?: string;
+  disabled?: boolean;
 }
 
 export const Button = (props: ButtonComponentProps) => {
-  const { label, onClick, style, className } = props;
+  const { label, onClick, style, className, disabled = false } = props;
+
   return (
-    <StyledButton onClick={onClick} style={style} className={className}>
+    <StyledButton
+      onClick={onClick}
+      style={style}
+      className={className}
+      disabled={disabled}
+    >
       {label}
     </StyledButton>
   );

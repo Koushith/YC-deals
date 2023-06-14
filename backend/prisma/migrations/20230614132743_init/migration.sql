@@ -35,6 +35,7 @@ CREATE TABLE "submit_deal" (
     "redeem_details" VARCHAR(5000) NOT NULL,
     "deal_type" VARCHAR(20) NOT NULL,
     "website" VARCHAR(30) NOT NULL,
+    "valid_till" VARCHAR(30) NOT NULL,
 
     CONSTRAINT "submit_deal_pkey" PRIMARY KEY ("id")
 );
