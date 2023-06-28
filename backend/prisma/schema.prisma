@@ -41,5 +41,5 @@ model submit_deal {
     deal_type         String  @db.VarChar(20)
     website           String  @db.VarChar(30)
     valid_till        String  @db.VarChar(30)
-    company_logo      String? @db.VarChar(10)
+    company_logo      String? @db.VarChar(100)
 }

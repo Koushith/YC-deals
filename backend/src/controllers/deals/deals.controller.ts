@@ -36,7 +36,7 @@ export const submitDeal = async (req: Request, res: Response) => {
         deal_type: dealType,
         website: website,
         valid_till: valid_till,
-        // company_logo: companyLogo
+        company_logo: companyLogo
       },
     });
 
