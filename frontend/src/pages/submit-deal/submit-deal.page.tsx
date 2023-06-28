@@ -16,6 +16,7 @@ const initialState = {
   company: "",
   shortDescription: "",
   email: "",
+  companyLogo: "",
   dealDetails: "",
   redeemDetails: "",
   dealType: "",
@@ -39,6 +40,7 @@ export const SubmitDeal = () => {
   const submitHandler = async () => {
     try {
       setIsLoading(true);
+      console.log(formData.companyLogo);
       const toastId = toast.loading("Submitting Deal!!");
       const res = await axios.post(
         `${BACKEND_API_ENDPOINT}/deals/submit-deal`,
@@ -51,6 +53,7 @@ export const SubmitDeal = () => {
           dealType: formData.dealType,
           website: formData.website,
           valid_till: formData.valid_till,
+          companyLogo: formData.companyLogo,
         }
       );
 
@@ -105,6 +108,13 @@ export const SubmitDeal = () => {
             placeholder="www.domain.com"
             name="website"
             value={formData.website}
+            onChange={formChangeHandler}
+          />
+          <Input
+            label="Logo"
+            placeholder="your logo link"
+            name="companyLogo"
+            value={formData.companyLogo}
             onChange={formChangeHandler}
           />
         </div>

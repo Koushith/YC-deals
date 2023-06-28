@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
+
 import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
@@ -13,7 +14,9 @@ export const submitDeal = async (req: Request, res: Response) => {
     dealType,
     website,
     valid_till,
+    companyLogo
   } = req.body;
+  console.log(companyLogo)
 
   if (!email || !dealsDetails || !redeemDetails) {
     res.status(400).json({
@@ -33,6 +36,7 @@ export const submitDeal = async (req: Request, res: Response) => {
         deal_type: dealType,
         website: website,
         valid_till: valid_till,
+        // company_logo: companyLogo
       },
     });
 
