@@ -29,6 +29,7 @@
     "typescript": "^5.0.4"
   },
   "devDependencies": {
+    "@types/amplitude-js": "^8.16.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/node": "^18.16.13",

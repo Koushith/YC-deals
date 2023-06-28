@@ -60,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@types/amplitude-js": "^8.16.2",
     "react-error-overlay": "^6.0.9"
   }
 }
