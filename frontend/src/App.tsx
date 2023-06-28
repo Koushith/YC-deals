@@ -7,7 +7,6 @@ export const App = () => {
   useEffect(() => {
     const apiKey = process.env.REACT_APP_AMPLITUDE_API_KEY || "";
     amplitude.getInstance().init(apiKey);
-    console.log("api key", apiKey);
     amplitude.getInstance().logEvent("Website Opened");
 
     return () => {

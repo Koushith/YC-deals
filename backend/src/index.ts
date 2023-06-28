@@ -25,19 +25,19 @@ const app: Express = express();
 
 app.use(express.json());
 
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin || ALLOWED_ORIGINS.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//   })
-// );
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
-app.use(cors())
+// app.use(cors())
 
 //Reclaim related routes
 app.post("/home", home);
