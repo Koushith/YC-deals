@@ -16,8 +16,8 @@ export const Navbar = () => {
         </NavLink>
         <ul>
           <li>
-            <NavLink to="/how-it-works"> How It Works?</NavLink>
             <NavLink to="/about">About</NavLink>
+            <NavLink to="/how-it-works"> How It Works?</NavLink>
           </li>
         </ul>
         {/* mobile-nav */}
