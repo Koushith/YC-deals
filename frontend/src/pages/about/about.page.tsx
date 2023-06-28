@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 import { Button } from "../../components/primitives";
+import { useEffect } from "react";
+import amplitude from "amplitude-js";
 
 export const StyledContainer = styled.div`
   max-width: 80rem;
@@ -29,6 +31,9 @@ export const StyledContainer = styled.div`
 `;
 
 export const AboutPage = () => {
+  useEffect(() => {
+    amplitude.getInstance().logEvent("Users on About Page");
+  }, []);
   const redirectToReclaim = () => {
     window.open("https://www.reclaimprotocol.org/", "_blank");
   };

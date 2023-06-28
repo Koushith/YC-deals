@@ -11,6 +11,7 @@ import { GoBack } from "../../components/primitives";
 import { DealDeailsShimmer } from "./deal-detail.shimmer";
 import { BACKEND_API_ENDPOINT } from "../../utils";
 import dealIcon from "./../../assets/icons/deal.png";
+import amplitude from "amplitude-js";
 
 export const DealDetailPage = () => {
   const [deal, setDeal] = useState([]);
@@ -33,6 +34,7 @@ export const DealDetailPage = () => {
   };
 
   useEffect(() => {
+    amplitude.getInstance().logEvent("Users on Deals Details");
     fetchDealDetail();
   }, [location?.state?.dealID]);
 

@@ -8,6 +8,7 @@ import { DealShimmer } from "../../components/deal-card/deal-card.shimmer";
 import DealIcon from "../../assets/icons/deal.svg";
 import axios from "axios";
 import { BACKEND_API_ENDPOINT } from "../../utils";
+import amplitude from "amplitude-js";
 
 export const HomePage = () => {
   const [deals, setDeals] = useState([]);
@@ -27,6 +28,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     fetchAllDeals();
+    amplitude.getInstance().logEvent("Users on Deal Listing page");
   }, []);
 
   const navigateToNewDeal = () => {

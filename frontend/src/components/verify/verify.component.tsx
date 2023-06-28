@@ -11,6 +11,7 @@ import { BACKEND_API_ENDPOINT } from "../../utils";
 import { Button, GoBack, Input } from "../primitives";
 import { VerifyContainer, StyledDiv } from "./verify.styles";
 import { useAuth } from "../../context/auth-context";
+import amplitude from "amplitude-js";
 
 const spinAnimation = keyframes`
   0% {
@@ -44,6 +45,9 @@ const ProgressStatus = styled.div`
 `;
 
 export const Failed = () => {
+  useEffect(() => {
+    amplitude.getInstance().logEvent("Users on Failed Screen");
+  }, []);
   return (
     <StyledDiv className="verify">
       <GoBack style={{ maxWidth: "50rem", margin: "1rem auto" }} />
@@ -64,16 +68,29 @@ export const Failed = () => {
 };
 
 export const QRCode = ({ appUrl }: any) => {
+  useEffect(() => {
+    amplitude.getInstance().logEvent("Users on QR Code");
+  }, [appUrl]);
   return (
     <div className="form-container">
       <h1 className="title">
         Almost there. verify and avail exclusive Deals!!
       </h1>
-
-      <a className="link" target="_blank" rel="noreferrer" href={appUrl}>
-        {" "}
-        Click here to open in Reclaim Wallet
-      </a>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        onClick={() =>
+          amplitude.getInstance().logEvent("Users Clicked TemplateURL")
+        }
+      >
+        <a className="link" target="_blank" rel="noreferrer" href={appUrl}>
+          {" "}
+          Click here to open in Reclaim Wallet
+        </a>
+      </div>
 
       <span>OR</span>
 
@@ -114,9 +131,9 @@ export const Verify = () => {
       );
 
       setStatus(data.status);
-      console.log(data.status);
 
       if (data.status === "VERIFIED") {
+        amplitude.getInstance().logEvent("Verified User");
         navigate(`/deal-detail`, {
           state: {
             dealID: dealID,
@@ -147,12 +164,13 @@ export const Verify = () => {
 
       //already exist
       if (data.status === 302) {
-        console.log(data);
+        amplitude.getInstance().logEvent("Revidited User");
         if (prevPath === "/submit-deal") {
           setIsLoggedIn(true);
           navigate("/submit-deal");
           return;
         } else {
+          amplitude.getInstance().logEvent("Deals Submitted");
           navigate(`/deal-detail`, {
             state: {
               dealID: dealID,
@@ -165,6 +183,7 @@ export const Verify = () => {
       }
     } catch (err) {
       console.log("something went wrong", err);
+      amplitude.getInstance().logEvent("Failed While Submitting Deal");
     } finally {
       setIsLoading(false);
     }

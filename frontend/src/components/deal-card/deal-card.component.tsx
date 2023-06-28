@@ -6,6 +6,8 @@ import { CardContainer } from "./deal-card.styles";
 import { Button, Shimmer } from "../primitives";
 import { DealShimmer, Test } from "./deal-card.shimmer";
 import DealIcon from "../../assets/icons/deal.png";
+import amplitude from "amplitude-js";
+
 export const DealCard = (props: any) => {
   const { deal } = props;
 
@@ -37,7 +39,10 @@ export const DealCard = (props: any) => {
 
       <Button
         label="View Deal"
-        onClick={() => navigateToDealDetail(deal?.id)}
+        onClick={() => {
+          navigateToDealDetail(deal?.id);
+          amplitude.getInstance().logEvent("clicked on View Deal");
+        }}
         className="btn"
       />
     </CardContainer>
