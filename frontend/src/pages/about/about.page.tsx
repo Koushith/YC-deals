@@ -20,6 +20,12 @@ export const StyledContainer = styled.div`
     margin: 1.2rem auto;
     font-size: 1.6rem;
   }
+  ul {
+    color: rgb(75, 88, 124);
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-left: 1.6rem;
+  }
 `;
 
 export const AboutPage = () => {
@@ -28,44 +34,64 @@ export const AboutPage = () => {
   };
   return (
     <StyledContainer>
-      <h1>About Reclaim Protocol</h1>
-
-      <p className="sub-heading">Export data from any website into a zkproof</p>
+      <h1>Introducing an Unrestricted Version of YC-Deals</h1>
 
       <p>
-        Using Reclaim Protocol you can export user-data from any website and
-        generate a zkproof for it. This proof generation is completely trustless
-        and privacy preserving.
+        In the world of startups and entrepreneurship, access to favorable deals
+        and discounts can be a game-changer. However, many existing platforms
+        impose limitations on the types of deals that can be offered, often
+        leaving out smaller startups or those in countries with different
+        economic landscapes. That's why we're excited to introduce our new
+        application, an unrestricted version of YC-Deals, aimed at
+        revolutionizing the startup deal landscape and providing opportunities
+        for all. Powered by Reclaim Protocol, this platform removes all
+        limitations, enabling startups to offer deals of any value, and opens
+        the door for a wide range of possibilities.
+      </p>
+      <p className="sub-heading">Breaking Down Limitations:</p>
+
+      <p>
+        YC-Deals, a popular platform for startups, initially imposed certain
+        restrictions on the deals that could be offered. While the original
+        version required deals to meet specific criteria such as
+      </p>
+      <ul>
+        <li> A minimum value of $10,000 with a 2-year expiration.</li>
+        <li>one year of free service, or a 50% discount for 2 years.</li>
+
+        <li>Submit the details of companies who has redeemed deals.</li>
+      </ul>
+      <p className="sub-heading">
+        {" "}
+        Our unrestricted version removes these limitations entirely.
       </p>
 
       <p>
-        For example, a user can login into Bank Of America and generate a proof
-        of their bank balance. In doing so, they aren't sharing their username,
-        password or any authentication token to any party - unlike what Plaid
-        does. Plaid takes the username password of the user and stores it in
-        their database, arguably in plaintext.
+        By eliminating these constraints, we open up a world of possibilities
+        for startups, enabling them to create deals that align with their unique
+        business models and circumstances. This inclusivity is particularly
+        important for startups in countries like India, where a $10,000 minimum
+        value can be a significant barrier. Our application aims to level the
+        playing field and democratize access to deals for all startups,
+        regardless of their size or location.
       </p>
 
       <p>
-        We can generate the proof for any data on any website without needing
-        any change from the said website. So, Bank of America doesn't need to
-        make any change for us to be able to generate the proof of bank balance.
+        The unrestricted version of YC-Deals, powered by Reclaim Protocol, aims
+        to revolutionize the startup deal landscape by removing limitations and
+        offering equal opportunities to startups worldwide. By enabling startups
+        to offer deals of any value, we empower them to create customized
+        offerings that align with their business goals. This application not
+        only benefits startups by providing greater flexibility and reach, but
+        it also fosters a more inclusive and diverse startup community.
+        Together, let's unlock the full potential of startup deals and drive
+        innovation forward.
       </p>
 
-      <p>
-        More importantly, Bank of America cannot stop a user from exporting this
-        data from their website. This is because Reclaim Protocol uses the TLS
-        session keys to generate the proofs. That means, if the website wants to
-        stop you from exporting this data and generating a proof for it, they'll
-        have to change the TLS Protocol, making their website incompatible with
-        all the web browsers in the world. TLS protocol is what powers HTTPS.
-      </p>
-      <p>
-        This puts the user in control of their data. They are reclaiming their
-        data from websites' databases. This data is rightfully theirs and should
-        have sovereignty over how and where this data is used. All the pieces of
-        reclaim protocol are completely open-sourced. You're welcome to fork,
-        contribute or lurk.
+      <p className="sub-heading">
+        Please note that YC-Deals is only available for YCombinator alumni and
+        those who have BookFace access. Similarly, the unrestricted version of
+        the application is available only to those who are part of YC.
       </p>
 
       <Button label="Read More about Reclaim" onClick={redirectToReclaim} />

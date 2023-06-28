@@ -20,7 +20,7 @@ import {
 dotenv.config();
 
 const PORT = process.env.PORT;
-const ALLOWED_ORIGINS = ["https://yc-deals.vercel.app", "http://192.168.0.197", "http://192.168.0.197:3000/", "http://192.168.0.197:8000"];
+const ALLOWED_ORIGINS = ["https://dealflex.vercel.app/", "http://192.168.0.197", "http://192.168.0.197:3000/", "http://192.168.0.197:8000"];
 const app: Express = express();
 
 app.use(express.json());

@@ -12,7 +12,7 @@ export const Navbar = () => {
     <NavbarContainer>
       <nav>
         <NavLink className="logo" to="/">
-          YC Deals
+          DealFlex
         </NavLink>
         <ul>
           <li>
