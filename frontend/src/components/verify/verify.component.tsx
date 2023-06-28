@@ -164,7 +164,9 @@ export const Verify = () => {
 
       //already exist
       if (data.status === 302) {
-        amplitude.getInstance().logEvent("Revidited User");
+        amplitude
+          .getInstance()
+          .logEvent("Redirected User - coming from Submit Deal Page");
         if (prevPath === "/submit-deal") {
           setIsLoggedIn(true);
           navigate("/submit-deal");

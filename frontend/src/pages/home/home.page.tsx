@@ -26,11 +26,6 @@ export const HomePage = () => {
     }
   };
 
-  useEffect(() => {
-    fetchAllDeals();
-    amplitude.getInstance().logEvent("Users on Deal Listing page");
-  }, []);
-
   const navigateToNewDeal = () => {
     navigate("submit-deal");
   };
