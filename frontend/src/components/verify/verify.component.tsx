@@ -138,31 +138,36 @@ export const Verify = () => {
   }, [callbackId]);
 
   const submitHandler = async () => {
-    setIsLoading(true);
-    const { data } = await axios.post(`${BACKEND_API_ENDPOINT}/home`, {
-      email,
-      dealID,
-    });
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post(`${BACKEND_API_ENDPOINT}/home`, {
+        email,
+        dealID,
+      });
 
-    //already exist
-    if (data.status === 302) {
-      console.log(data);
-      if (prevPath === "/submit-deal") {
-        setIsLoggedIn(true);
-        navigate("/submit-deal");
-        return;
+      //already exist
+      if (data.status === 302) {
+        console.log(data);
+        if (prevPath === "/submit-deal") {
+          setIsLoggedIn(true);
+          navigate("/submit-deal");
+          return;
+        } else {
+          navigate(`/deal-detail`, {
+            state: {
+              dealID: dealID,
+            },
+          });
+        }
       } else {
-        navigate(`/deal-detail`, {
-          state: {
-            dealID: dealID,
-          },
-        });
+        setCallbackId(data.callbackId);
+        setAppUrl(data.url);
       }
-    } else {
-      setCallbackId(data.callbackId);
-      setAppUrl(data.url);
+    } catch (err) {
+      console.log("something went wrong", err);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   if (status === "FAILED") {
