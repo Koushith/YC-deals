@@ -65,7 +65,6 @@ This Application is Powered by Reclaim Protocol. to know more check this link - 
 <img width="1792" alt="Screenshot 2023-06-15 at 1 42 59 AM" src="https://github.com/Koushith/YC-deals/assets/30016242/cc47815e-d0a4-410f-8882-60b66538ada8">
 
 ![2023-06-15-01-45-yc-deals vercel app](https://github.com/Koushith/YC-deals/assets/30016242/c52e8989-d1bd-4dd6-8f83-69ac0664c8ad)
-<img width="1792" alt="image" src="https://github.com/Koushith/YC-deals/assets/30016242/0fe00179-972e-4bfc-b396-259234663229">
 ![image](https://github.com/Koushith/YC-deals/assets/30016242/65c8b6c7-23c2-4f5d-8ca1-1506d39a3e64)
 
 <img width="1792" alt="image" src="https://github.com/Koushith/YC-deals/assets/30016242/c62eae13-8920-4093-bdf3-cbeeab5c7b1a">
