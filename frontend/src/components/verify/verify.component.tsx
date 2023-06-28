@@ -10,6 +10,7 @@ import deal from "../../assets/icons/deal.png";
 import { BACKEND_API_ENDPOINT } from "../../utils";
 import { Button, GoBack, Input } from "../primitives";
 import { VerifyContainer, StyledDiv } from "./verify.styles";
+import { useAuth } from "../../context/auth-context";
 
 const spinAnimation = keyframes`
   0% {
@@ -101,8 +102,10 @@ export const Verify = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { setIsLoggedIn } = useAuth();
 
   const dealID = location?.state?.dealId;
+  const prevPath = location?.state?.previousPath;
 
   const getStatus = async (callbackId: string) => {
     try {
@@ -141,12 +144,20 @@ export const Verify = () => {
       dealID,
     });
 
+    //already exist
     if (data.status === 302) {
-      navigate(`/deal-detail`, {
-        state: {
-          dealID: dealID,
-        },
-      });
+      console.log(data);
+      if (prevPath === "/submit-deal") {
+        setIsLoggedIn(true);
+        navigate("/submit-deal");
+        return;
+      } else {
+        navigate(`/deal-detail`, {
+          state: {
+            dealID: dealID,
+          },
+        });
+      }
     } else {
       setCallbackId(data.callbackId);
       setAppUrl(data.url);

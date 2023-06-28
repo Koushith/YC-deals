@@ -10,7 +10,7 @@ const deals_controller_1 = require("./controllers/deals/deals.controller");
 const reclaim_controller_1 = require("./controllers/reclaim/reclaim.controller");
 dotenv_1.default.config();
 const PORT = process.env.PORT;
-const ALLOWED_ORIGINS = ["https://yc-deals.vercel.app", "http://192.168.0.197", "http://192.168.0.197:3000/", "http://192.168.0.197:8000"];
+const ALLOWED_ORIGINS = ["https://dealflex.vercel.app/", "http://192.168.0.197", "http://192.168.0.197:3000/", "http://192.168.0.197:8000"];
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 // app.use(

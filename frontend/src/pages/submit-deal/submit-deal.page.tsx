@@ -9,8 +9,9 @@ import {
   RichTextEditor,
 } from "../../components/primitives";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BACKEND_API_ENDPOINT } from "../../utils";
+import { useAuth } from "../../context/auth-context";
 
 const initialState = {
   company: "",
@@ -32,6 +33,19 @@ export const SubmitDeal = () => {
   const [isBtnDisabled, setIsButtonDisabled] = useState(false);
 
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
+  const location = useLocation();
+  console.log("isLoh", isLoggedIn);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/claim-deal", {
+        state: {
+          previousPath: location.pathname,
+        },
+      });
+    }
+  }, []);
 
   const formChangeHandler = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
