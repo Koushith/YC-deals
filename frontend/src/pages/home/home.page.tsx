@@ -26,6 +26,10 @@ export const HomePage = () => {
     }
   };
 
+  useEffect(() => {
+    fetchAllDeals();
+  }, []);
+
   const navigateToNewDeal = () => {
     navigate("submit-deal");
   };

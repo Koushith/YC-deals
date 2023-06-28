@@ -35,7 +35,6 @@ const submitDeal = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 company_logo: companyLogo
             },
         });
-        console.log("deal", deal);
         if (deal) {
             res.status(201).json({
                 message: "Deal created Successfully",
@@ -70,7 +69,6 @@ exports.getAllDeals = getAllDeals;
 const getDealById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //todo- protected- show only if proof is valid
     const dealId = req.params.id;
-    console.log("Deal id", dealId);
     try {
         if (!dealId) {
             res.status(500).json({
