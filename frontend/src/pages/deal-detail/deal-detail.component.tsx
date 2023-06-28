@@ -45,7 +45,10 @@ export const DealDetailPage = () => {
         <>
           <div className="company-info">
             <div className="logo">
-              src={deal?.company_logo ? deal?.company_logo : dealIcon}
+              <img
+                src={deal?.company_logo ? deal?.company_logo : dealIcon}
+                alt="logo"
+              />
             </div>
 
             <div className="info">
