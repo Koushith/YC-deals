@@ -10,20 +10,21 @@ const deals_controller_1 = require("./controllers/deals/deals.controller");
 const reclaim_controller_1 = require("./controllers/reclaim/reclaim.controller");
 dotenv_1.default.config();
 const PORT = process.env.PORT;
-const ALLOWED_ORIGINS = ["https://dealflex.vercel.app/", "http://192.168.0.197", "http://192.168.0.197:3000/", "http://192.168.0.197:8000", "https://api.amplitude.com"];
+//const ALLOWED_ORIGINS = ["https://dealflex.vercel.app/", "http://192.168.0.197", "http://192.168.0.197:3000/", "http://192.168.0.197:8000", "https://api.amplitude.com"];
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: (origin, callback) => {
-        if (!origin || ALLOWED_ORIGINS.includes(origin)) {
-            callback(null, true);
-        }
-        else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-}));
-// app.use(cors())
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//   })
+// );
+app.use((0, cors_1.default)());
 //Reclaim related routes
 app.post("/home", reclaim_controller_1.home);
 app.get("/status/:callbackId", reclaim_controller_1.getStatus);
