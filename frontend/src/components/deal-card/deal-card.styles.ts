@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+
 import { phones, tablets } from "../../utils";
 
 export const CardContainer = styled.div`
@@ -19,6 +20,7 @@ export const CardContainer = styled.div`
     img {
       width: 8rem;
       height: 8rem;
+      border-radius:4px;
     }
 
     .deal-title {

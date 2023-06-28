@@ -32,7 +32,7 @@ const submitDeal = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 deal_type: dealType,
                 website: website,
                 valid_till: valid_till,
-                // company_logo: companyLogo
+                company_logo: companyLogo
             },
         });
         console.log("deal", deal);

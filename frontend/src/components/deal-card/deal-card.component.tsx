@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { CardContainer } from "./deal-card.styles";
 import { Button, Shimmer } from "../primitives";
 import { DealShimmer, Test } from "./deal-card.shimmer";
-import DealIcon from "../../assets/icons/deal.svg";
+import DealIcon from "../../assets/icons/deal.png";
 export const DealCard = (props: any) => {
   const { deal } = props;
 
@@ -22,7 +22,10 @@ export const DealCard = (props: any) => {
   return (
     <CardContainer>
       <div className="left">
-        <img src={DealIcon} alt="company-logo" />
+        <img
+          src={deal?.company_logo ? deal?.company_logo : DealIcon}
+          alt="company-logo"
+        />
         <div className="deal-info">
           <h2 className="deal-title">{deal?.company_name}</h2>
           <div>
