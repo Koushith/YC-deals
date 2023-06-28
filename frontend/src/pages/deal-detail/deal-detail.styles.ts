@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+
 import { tablets, phones } from "../../utils";
 
 export const DealDetailContainer = styled.section`
@@ -18,6 +19,7 @@ export const DealDetailContainer = styled.section`
     img {
       height: 8rem;
       width: 8rem;
+      border-radius:4px;
     }
 
     .info {
