@@ -1,37 +1,43 @@
-import express, { Express, Request, Response } from "express";
 import { reclaimprotocol } from "@reclaimprotocol/reclaim-sdk";
+
+import express, { Express, Request, Response } from "express";
+
 import dotenv from "dotenv";
+
 import cors from "cors";
-import {
-  getStatus,
-  home,
-  postStatus,
-} from "./controllers/reclaim/reclaim.controller";
+
 import {
   getAllDeals,
   getDealById,
   submitDeal,
 } from "./controllers/deals/deals.controller";
+import {
+  getStatus,
+  home,
+  postStatus,
+} from "./controllers/reclaim/reclaim.controller";
 
 dotenv.config();
 
 const PORT = process.env.PORT;
-const ALLOWED_ORIGINS = ["https://yc-deals.vercel.app"];
+const ALLOWED_ORIGINS = ["https://yc-deals.vercel.app", "http://192.168.0.197", "http://192.168.0.197:3000/", "http://192.168.0.197:8000"];
 const app: Express = express();
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//   })
+// );
+
+app.use(cors())
 
 //Reclaim related routes
 app.post("/home", home);
