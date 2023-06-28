@@ -25,7 +25,7 @@ export const DealDetailPage = () => {
       const { data } = await axios.get(
         `${BACKEND_API_ENDPOINT}/deals/${location?.state?.dealID}`
       );
-      console.log(data);
+
       setDeal(data?.deal);
       setIsLoading(false);
     } catch (error) {

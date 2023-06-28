@@ -39,8 +39,6 @@ export const Header = () => {
     });
     setCallbackId(data.callbackId);
     setAppUrl(data.url);
-
-    console.log("resssss----", data);
   };
 
   return (

@@ -35,7 +35,6 @@ export const SubmitDeal = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
   const location = useLocation();
-  console.log("isLoh", isLoggedIn);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -54,7 +53,7 @@ export const SubmitDeal = () => {
   const submitHandler = async () => {
     try {
       setIsLoading(true);
-      console.log(formData.companyLogo);
+
       const toastId = toast.loading("Submitting Deal!!");
       const res = await axios.post(
         `${BACKEND_API_ENDPOINT}/deals/submit-deal`,
