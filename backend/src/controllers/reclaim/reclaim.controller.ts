@@ -1,9 +1,12 @@
 //@ts-nocheck
 
-import { Request, Response } from "express";
-import { validateEmail } from "../../utils/validators";
 import { PrismaClient } from "@prisma/client";
+
 import { Proof, reclaimprotocol } from "@reclaimprotocol/reclaim-sdk";
+
+import { Request, Response } from "express";
+
+import { validateEmail } from "../../utils/validators";
 
 const CALLBACK_URL = process.env.CALLBACK_URL! + "/" + "callback/";
 const CALLBACK_ID_PREFIX = "bookface-";
@@ -44,24 +47,19 @@ export const home = async (req: Request, res: Response) => {
         data: isEmailExist,
       });
     } else {
-      const callbackId = CALLBACK_ID_PREFIX + generateUuid();
-
-      const template = reclaim
-        .connect(
-          "Prove that you have bookface login",
-          [
-            {
-              provider: "yc-login",
-              payload: {},
-              templateClaimId: reclaimprotocol.utils.generateUuid(),
-            },
-          ],
-          CALLBACK_URL
-        )
-        .generateTemplate(callbackId);
-
-      const templateUrl = template.url;
+      const template = reclaim.requestProofs({
+        title: "Prove that you have bookface login",
+        baseCallbackUrl: CALLBACK_URL,
+        requestedProofs: [
+          new reclaim.CustomProvider({
+            provider: "yc-login",
+            payload: {},
+          }),
+        ],
+      });
+      const callbackId = template.callbackId;
       const templateId = template.id;
+      const templateUrl = await template.getReclaimUrl({ shortened: true });
 
       const query = await prisma.yc_deals.create({
         data: {
@@ -109,6 +107,7 @@ export const getStatus = async (req: Request, res: Response) => {
   }
 };
 
+// verififaction-
 export const postStatus = async (req: Request, res: Response) => {
   if (!req.params.id) {
     res.status(400).send(`400 - Bad Request: callbackId is required`);

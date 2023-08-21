@@ -11,9 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postStatus = exports.getStatus = exports.home = void 0;
-const validators_1 = require("../../utils/validators");
 const client_1 = require("@prisma/client");
 const reclaim_sdk_1 = require("@reclaimprotocol/reclaim-sdk");
+const validators_1 = require("../../utils/validators");
 const CALLBACK_URL = process.env.CALLBACK_URL + "/" + "callback/";
 const CALLBACK_ID_PREFIX = "bookface-";
 const prisma = new client_1.PrismaClient();
@@ -46,18 +46,34 @@ const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         else {
-            const callbackId = CALLBACK_ID_PREFIX + generateUuid();
-            const template = reclaim
-                .connect("Prove that you have bookface login", [
-                {
-                    provider: "yc-login",
-                    payload: {},
-                    templateClaimId: reclaim_sdk_1.reclaimprotocol.utils.generateUuid(),
-                },
-            ], CALLBACK_URL)
-                .generateTemplate(callbackId);
-            const templateUrl = template.url;
+            // const callbackId = CALLBACK_ID_PREFIX + generateUuid();
+            // const template = reclaim
+            //   .connect(
+            //     "Prove that you have bookface login",
+            //     [
+            //       {
+            //         provider: "yc-login",
+            //         payload: {},
+            //         templateClaimId: reclaimprotocol.utils.generateUuid(),
+            //       },
+            //     ],
+            //     CALLBACK_URL
+            //   )
+            //   .generateTemplate(callbackId);
+            const template = reclaim.requestProofs({
+                title: "Prove that you have bookface login",
+                baseCallbackUrl: CALLBACK_URL,
+                requestedProofs: [
+                    new reclaim.CustomProvider({
+                        provider: "yc-login",
+                        payload: {},
+                    }),
+                ],
+            });
+            const callbackId = template.callbackId;
+            // const templateUrl = template.url;
             const templateId = template.id;
+            const templateUrl = yield template.getReclaimUrl({ shortened: true });
             const query = yield prisma.yc_deals.create({
                 data: {
                     callback_id: callbackId,
