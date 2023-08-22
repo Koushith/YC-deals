@@ -50,7 +50,7 @@ app.get("/deals/:id", getDealById);
 
 //RN related routes
 app.use(express.text({ type: "*/*" }));
-app.post("/callback/:id", postStatus);
+app.post("/callback/", postStatus);
 
 //server starter
 app.get("/", (req: Request, res: Response) => {

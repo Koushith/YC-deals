@@ -34,7 +34,7 @@ app.get("/deals", deals_controller_1.getAllDeals);
 app.get("/deals/:id", deals_controller_1.getDealById);
 //RN related routes
 app.use(express_1.default.text({ type: "*/*" }));
-app.post("/callback/:id", reclaim_controller_1.postStatus);
+app.post("/callback/", reclaim_controller_1.postStatus);
 //server starter
 app.get("/", (req, res) => {
     res.send(`This route works---!!!`);
