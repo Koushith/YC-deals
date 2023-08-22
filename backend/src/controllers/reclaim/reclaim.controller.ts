@@ -51,9 +51,24 @@ export const home = async (req: Request, res: Response) => {
         title: "Prove that you have bookface login",
         baseCallbackUrl: CALLBACK_URL,
         requestedProofs: [
-          new reclaim.CustomProvider({
-            provider: "yc-login",
-            payload: {},
+          new reclaim.HttpsProvider({
+            name: 'YC Creds',
+            logoUrl: 'https://http-provider.s3.ap-south-1.amazonaws.com/yc.png',
+            url: 'https://bookface.ycombinator.com/home',
+            loginUrl: 'https://bookface.ycombinator.com/home',
+            loginCookies: ['_sso.key'],
+            responseSelection: [
+              {
+                jsonPath: '$.currentUser',
+                responseMatch: '\\{"id":{{YC_USER_ID}},.*?waas_admin.*?:{.*?}.*?:\\{.*?}.*?(?:full_name|first_name).*?}',
+                xPath: "//*[@id='js-react-on-rails-context']"
+              },
+              {
+                jsonPath: '$.hasBookface',
+                responseMatch: '"hasBookface":true',
+                xPath: "//script[@data-component-name='BookfaceCsrApp']"
+              }
+            ]
           }),
         ],
       });
@@ -133,7 +148,7 @@ export const postStatus = async (req: Request, res: Response) => {
     const first = proofs[0];
 
     // verify the proof
-    const isValidProofs = await reclaim.verifyCorrectnessOfProofs([first]);
+    const isValidProofs = await reclaim.verifyCorrectnessOfProofs(callbackId, [first]);
     console.log("isValid??", isValidProofs);
 
     if (!isValidProofs) {
