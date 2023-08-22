@@ -46,32 +46,32 @@ const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         else {
-            // const callbackId = CALLBACK_ID_PREFIX + generateUuid();
-            // const template = reclaim
-            //   .connect(
-            //     "Prove that you have bookface login",
-            //     [
-            //       {
-            //         provider: "yc-login",
-            //         payload: {},
-            //         templateClaimId: reclaimprotocol.utils.generateUuid(),
-            //       },
-            //     ],
-            //     CALLBACK_URL
-            //   )
-            //   .generateTemplate(callbackId);
             const template = reclaim.requestProofs({
                 title: "Prove that you have bookface login",
                 baseCallbackUrl: CALLBACK_URL,
                 requestedProofs: [
-                    new reclaim.CustomProvider({
-                        provider: "yc-login",
-                        payload: {},
+                    new reclaim.HttpsProvider({
+                        name: 'YC Creds',
+                        logoUrl: 'https://http-provider.s3.ap-south-1.amazonaws.com/yc.png',
+                        url: 'https://bookface.ycombinator.com/home',
+                        loginUrl: 'https://bookface.ycombinator.com/home',
+                        loginCookies: ['_sso.key'],
+                        responseSelection: [
+                            {
+                                jsonPath: '$.currentUser',
+                                responseMatch: '\\{"id":{{YC_USER_ID}},.*?waas_admin.*?:{.*?}.*?:\\{.*?}.*?(?:full_name|first_name).*?}',
+                                xPath: "//*[@id='js-react-on-rails-context']"
+                            },
+                            {
+                                jsonPath: '$.hasBookface',
+                                responseMatch: '"hasBookface":true',
+                                xPath: "//script[@data-component-name='BookfaceCsrApp']"
+                            }
+                        ]
                     }),
                 ],
             });
             const callbackId = template.callbackId;
-            // const templateUrl = template.url;
             const templateId = template.id;
             const templateUrl = yield template.getReclaimUrl({ shortened: true });
             const query = yield prisma.yc_deals.create({
@@ -119,6 +119,7 @@ const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getStatus = getStatus;
+// verififaction-
 const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.params.id) {
         res.status(400).send(`400 - Bad Request: callbackId is required`);
@@ -140,7 +141,7 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const proofs = reqBody.proofs;
         const first = proofs[0];
         // verify the proof
-        const isValidProofs = yield reclaim.verifyCorrectnessOfProofs([first]);
+        const isValidProofs = yield reclaim.verifyCorrectnessOfProofs(callbackId, [first]);
         console.log("isValid??", isValidProofs);
         if (!isValidProofs) {
             yield prisma.yc_deals.update({
