@@ -129,7 +129,7 @@ export const Verify = () => {
       const { data } = await axios.get(
         `${BACKEND_API_ENDPOINT}/status/${callbackId}`
       );
-
+      console.log("status data-", data);
       setStatus(data.status);
 
       if (data.status === "VERIFIED") {

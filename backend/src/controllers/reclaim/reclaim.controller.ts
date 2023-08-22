@@ -52,23 +52,24 @@ export const home = async (req: Request, res: Response) => {
         baseCallbackUrl: CALLBACK_URL,
         requestedProofs: [
           new reclaim.HttpsProvider({
-            name: 'YC Creds',
-            logoUrl: 'https://http-provider.s3.ap-south-1.amazonaws.com/yc.png',
-            url: 'https://bookface.ycombinator.com/home',
-            loginUrl: 'https://bookface.ycombinator.com/home',
-            loginCookies: ['_sso.key'],
+            name: "YC Creds",
+            logoUrl: "https://http-provider.s3.ap-south-1.amazonaws.com/yc.png",
+            url: "https://bookface.ycombinator.com/home",
+            loginUrl: "https://bookface.ycombinator.com/home",
+            loginCookies: ["_sso.key"],
             responseSelection: [
               {
-                jsonPath: '$.currentUser',
-                responseMatch: '\\{"id":{{YC_USER_ID}},.*?waas_admin.*?:{.*?}.*?:\\{.*?}.*?(?:full_name|first_name).*?}',
-                xPath: "//*[@id='js-react-on-rails-context']"
+                jsonPath: "$.currentUser",
+                responseMatch:
+                  '\\{"id":{{YC_USER_ID}},.*?waas_admin.*?:{.*?}.*?:\\{.*?}.*?(?:full_name|first_name).*?}',
+                xPath: "//*[@id='js-react-on-rails-context']",
               },
               {
-                jsonPath: '$.hasBookface',
+                jsonPath: "$.hasBookface",
                 responseMatch: '"hasBookface":true',
-                xPath: "//script[@data-component-name='BookfaceCsrApp']"
-              }
-            ]
+                xPath: "//script[@data-component-name='BookfaceCsrApp']",
+              },
+            ],
           }),
         ],
       });
@@ -97,7 +98,9 @@ export const home = async (req: Request, res: Response) => {
 };
 
 export const getStatus = async (req: Request, res: Response) => {
-  const callbackId = req.query.callbackId;
+  // const callbackId = req.query.callbackId;
+  const callbackId = req.params.callbackId;
+  console.log(callbackId);
   if (!callbackId) {
     res.status(400).send("400 -Bad Request. callback id id required");
   }
@@ -124,11 +127,13 @@ export const getStatus = async (req: Request, res: Response) => {
 
 // verififaction-
 export const postStatus = async (req: Request, res: Response) => {
-  if (!req.params.id) {
+  console.log("req----", req.query);
+  console.log("callback idddd-----", req.query.callbackId);
+  if (!req.query.callbackId) {
     res.status(400).send(`400 - Bad Request: callbackId is required`);
     return;
   }
-  console.log("id", req.params.id);
+  console.log("id", req.query.callbackId);
 
   if (!req.body) {
     res.status(400).send(`400 - Bad Request: body is required`);
@@ -143,12 +148,14 @@ export const postStatus = async (req: Request, res: Response) => {
       return;
     }
 
-    const callbackId = req.params.id;
+    const callbackId = req.query.callbackId;
     const proofs = reqBody.proofs as Proof[];
     const first = proofs[0];
 
     // verify the proof
-    const isValidProofs = await reclaim.verifyCorrectnessOfProofs(callbackId, [first]);
+    const isValidProofs = await reclaim.verifyCorrectnessOfProofs(callbackId, [
+      first,
+    ]);
     console.log("isValid??", isValidProofs);
 
     if (!isValidProofs) {

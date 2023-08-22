@@ -51,23 +51,23 @@ const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 baseCallbackUrl: CALLBACK_URL,
                 requestedProofs: [
                     new reclaim.HttpsProvider({
-                        name: 'YC Creds',
-                        logoUrl: 'https://http-provider.s3.ap-south-1.amazonaws.com/yc.png',
-                        url: 'https://bookface.ycombinator.com/home',
-                        loginUrl: 'https://bookface.ycombinator.com/home',
-                        loginCookies: ['_sso.key'],
+                        name: "YC Creds",
+                        logoUrl: "https://http-provider.s3.ap-south-1.amazonaws.com/yc.png",
+                        url: "https://bookface.ycombinator.com/home",
+                        loginUrl: "https://bookface.ycombinator.com/home",
+                        loginCookies: ["_sso.key"],
                         responseSelection: [
                             {
-                                jsonPath: '$.currentUser',
+                                jsonPath: "$.currentUser",
                                 responseMatch: '\\{"id":{{YC_USER_ID}},.*?waas_admin.*?:{.*?}.*?:\\{.*?}.*?(?:full_name|first_name).*?}',
-                                xPath: "//*[@id='js-react-on-rails-context']"
+                                xPath: "//*[@id='js-react-on-rails-context']",
                             },
                             {
-                                jsonPath: '$.hasBookface',
+                                jsonPath: "$.hasBookface",
                                 responseMatch: '"hasBookface":true',
-                                xPath: "//script[@data-component-name='BookfaceCsrApp']"
-                            }
-                        ]
+                                xPath: "//script[@data-component-name='BookfaceCsrApp']",
+                            },
+                        ],
                     }),
                 ],
             });
@@ -95,7 +95,9 @@ const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.home = home;
 const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const callbackId = req.query.callbackId;
+    // const callbackId = req.query.callbackId;
+    const callbackId = req.params.callbackId;
+    console.log(callbackId);
     if (!callbackId) {
         res.status(400).send("400 -Bad Request. callback id id required");
     }
@@ -121,11 +123,13 @@ const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getStatus = getStatus;
 // verififaction-
 const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.params.id) {
+    console.log("req----", req.query);
+    console.log("callback idddd-----", req.query.callbackId);
+    if (!req.query.callbackId) {
         res.status(400).send(`400 - Bad Request: callbackId is required`);
         return;
     }
-    console.log("id", req.params.id);
+    console.log("id", req.query.callbackId);
     if (!req.body) {
         res.status(400).send(`400 - Bad Request: body is required`);
         return;
@@ -137,11 +141,13 @@ const postStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             res.status(400).send(`400 - Bad Request: proofs are required`);
             return;
         }
-        const callbackId = req.params.id;
+        const callbackId = req.query.callbackId;
         const proofs = reqBody.proofs;
         const first = proofs[0];
         // verify the proof
-        const isValidProofs = yield reclaim.verifyCorrectnessOfProofs(callbackId, [first]);
+        const isValidProofs = yield reclaim.verifyCorrectnessOfProofs(callbackId, [
+            first,
+        ]);
         console.log("isValid??", isValidProofs);
         if (!isValidProofs) {
             yield prisma.yc_deals.update({

@@ -10,7 +10,13 @@ const deals_controller_1 = require("./controllers/deals/deals.controller");
 const reclaim_controller_1 = require("./controllers/reclaim/reclaim.controller");
 dotenv_1.default.config();
 const PORT = process.env.PORT;
-//const ALLOWED_ORIGINS = ["https://dealflex.vercel.app/", "http://192.168.0.197", "http://192.168.0.197:3000/", "http://192.168.0.197:8000", "https://api.amplitude.com"];
+const ALLOWED_ORIGINS = [
+    "https://dealflex.vercel.app/",
+    "http://192.168.0.197",
+    "http://192.168.0.100:3000/",
+    "http://192.168.0.100:8000",
+    "https://api.amplitude.com",
+];
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 // app.use(
