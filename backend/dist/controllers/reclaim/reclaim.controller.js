@@ -95,7 +95,7 @@ const home = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.home = home;
 const getStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const callbackId = req.params.callbackId;
+    const callbackId = req.query.callbackId;
     if (!callbackId) {
         res.status(400).send("400 -Bad Request. callback id id required");
     }

@@ -97,7 +97,7 @@ export const home = async (req: Request, res: Response) => {
 };
 
 export const getStatus = async (req: Request, res: Response) => {
-  const callbackId = req.params.callbackId;
+  const callbackId = req.query.callbackId;
   if (!callbackId) {
     res.status(400).send("400 -Bad Request. callback id id required");
   }
